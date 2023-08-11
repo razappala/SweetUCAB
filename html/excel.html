@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>Lectura de archivo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    
+</head>
+<body>
+
+    <nav class="navbar has-shadow is-white">
+        <!--logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <img src="imagenes/logo.png" alt="logo pag" style="max-height: 60px" class="py-2 px-2">
+            </a>
+        </div>
+
+        <div class="navbar-menu has-background-danger" id="nav-links">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">Inicio</a>
+                <a class="navbar-item" href="novedades.html">Novedades</a>
+                <a class="navbar-item" href="crud_producto.html">Productos</a>
+                <a class="navbar-item" href="sweetFlyer.html">Descuentos</a>
+                
+            </div>
+            <div class="navbar-end has-background-danger">
+                <a href="carrito.html" class="navbar-item">
+                    <img src="imagenes/carrito.png" alt="carrito">
+                </a>
+                <a href="login.html" class="navbar-item">
+                    Iniciar Sesion
+                </a>
+            </div>
+        </div>
+    </nav>
+<body>
+    <div class="section">
+        <div class="columns">
+            <div class="column has-text-centered">
+                <br>
+                <h2 class="subtitle is-3 has-text-weight-bold">Lectura de archivo Excel</h2>
+                <br>
+                <h3 class="subtitle is-6 has-text-weight-light has-text-danger is-italic">Seleccione el archivo .csv y presione 'Cargar archivo' para realizar la inserción!</h3>
+                <input type="file" id="uploadfile" accept=".csv"> <br><br>
+                <button class="button is-danger" id="uploadconfirm">Cargar archivo</button>
+                <br><br><br>
+                <h3 class="subtitle is-6 has-text-weight-light ">Espere unos segundos y...</h3>
+            
+                <h3 class="subtitle is-4 has-text-weight-bold has-text-warning-dark">Listo!</h3>
+                <h3 class="subtitle is-6 is-italic"> Pruebe consultar el reporte de Asistencia de sus empleados</h3>
+                
+                <a href="reporte_empleados.html" class="button is-danger">Reporte General</a>
+                <br><br>
+                <h3 class="subtitle is-6 is-italic"> Tambien puede observarlo de manera particular!</h3>
+                <div class="columns">
+                    <div class="column is-grouped">
+                        <a href="empleadosTRIM1.html" class="button is-danger">Primer Trimestre</a>
+                        <a href="empleadosTRIM2.html" class="button is-danger">Segundo Trimestre</a>
+                        <a href="empleadosTRIM3.html" class="button is-danger">Tercer Trimestre</a>
+                        <a href="empleadosTRIM4.html" class="button is-danger">Cuarto Trimestre</a>
+                    </div>
+                </div>
+                
+               
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js"></script>
+
+    <script>
+        const uploadconfirm = document.getElementById('uploadconfirm').
+
+            addEventListener('click',() => {
+                Papa.parse(document.getElementById('uploadfile').files[0],{
+                    download: true,
+                    header: true,
+                    skipEmptyLines: false,
+                    complete: function(results){
+                        console.log(results);
+                        for(const emp of results.data){
+
+                            var cas_hora_entrada = emp.cas_hora_entrada;
+                            var cas_hora_salida = emp.cas_hora_salida;
+                            var cas_fecha = emp.cas_fecha;
+                            var fk_persona_empleado = emp.fk_persona_empleado;
+
+                            fetch('http://localhost:3000/controlEmpleados',{
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type':'application/json'
+                                },
+                                body: JSON.stringify({
+                                    cas_hora_entrada: cas_hora_entrada,
+                                    cas_hora_salida: cas_hora_salida,
+                                    cas_fecha: cas_fecha,
+                                    fk_persona_empleado: fk_persona_empleado
+                                })
+                            })
+                        }
+                    }
+                });
+            });
+    </script>
+
+    <script>
+
+
+    </script>
+</body>
+</html>

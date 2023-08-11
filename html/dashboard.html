@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.min.css"> 
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar has-shadow is-white">
+        <!--logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <img src="imagenes/logo.png" alt="logo pag" style="max-height: 60px" class="py-2 px-2">
+            </a>
+        </div>
+
+        <div class="navbar-menu has-background-danger" id="nav-links">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">Inicio</a>
+                <a class="navbar-item" href="novedades.html">Novedades</a>
+                <a class="navbar-item" href="productos.html">Productos</a>
+                <a class="navbar-item" href="sweetFlyer.html">Descuentos</a>
+                <a class="navbar-item" href="contacto.html">Contáctanos</a>
+            </div>
+            <div class="navbar-end has-background-danger">
+                <a href="carrito.html" class="navbar-item">
+                    <img src="imagenes/carrito.png" alt="carrito">
+                </a>
+                <a href="login.html" class="navbar-item">
+                    Iniciar Sesion
+                </a>
+            </div>
+        </div>
+    </nav>
+    <br><br>
+    <h2 class="subtitle is-2 has-text-weight-bold has-text-danger has-text-centered">Dashboard</h2>
+<br>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-third">
+                <h3 class="subtitle is-5 has-text-weight-light has-text-centered has-background-danger-light has-text-black">Total de ventas por mes</h3>
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="column is-third">
+                <h3 class="subtitle is-5 has-text-weight-light has-text-centered has-background-danger-light has-text-black">Producto más vendido</h3>
+                <br><br><br><br>
+                <h2 class="title has-text-centered has-text-weight-bold is-italic" id="MasVendido">Producto</h2>
+            </div>
+            <div class="column is-third">
+                <h3 class="subtitle is-5 has-text-weight-light has-text-centered has-background-danger-light has-text-black">Producto menos vendido</h3>
+                <br><br><br><br>
+                <h2 class="title has-text-centered has-text-weight-bold is-italic " id="MenosVendido">Producto</h2>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-third">
+                <h3 class="subtitle is-5 has-text-weight-light has-text-centered has-background-danger-light has-text-black">Porcentaje de uso de los métodos de pago</h3>
+                <canvas id="myChart4"></canvas>
+            </div>
+            <div class="column is-third">
+                <h3 class="subtitle is-5 has-text-weight-light has-text-centered has-background-danger-light has-text-black">Puntos otorgados vs. Puntos Canjeados</h3>
+                <canvas id="myChart5"></canvas>
+            </div>
+            <div class="column is-third">
+                <h3 class="subtitle is-5 has-text-weight-light has-text-centered has-background-danger-light has-text-black">Cantidad de ventas en línea</h3>
+                <br><br><br><br>
+                <h2 class="title has-text-centered has-text-weight-bold is-italic" id="CantVentasOnline">XX</h2>
+            </div>
+        </div>
+        
+        <div class="columns">
+            <div class="column">
+                <h3 class="subtitle is-5 has-text-weight-light has-text-centered has-background-danger-light has-text-black">Cantidad de ventas por tienda</h3>
+                <canvas id="myChart7"></canvas>
+            </div>
+        </div>
+    </div>
+    
+        <button onclick="updateChart()">fetch</button>
+
+    <script>
+
+//------------------Grafico 1-----------------
+
+async function fetchData() {
+                const url = 'http://localhost:3000/ventasxMes/'
+                const response = await fetch(url);
+
+                const ventaxMes = await response.json();
+                console.log(ventaxMes);
+
+                return ventaxMes;
+            }
+
+
+            fetchData().then(ventaxMes => {
+                const mes = ventaxMes.map(
+                    function(index){
+                        return index.mes;
+                    })
+                const ventas = ventaxMes.map(
+                    function(index){
+                        return parseInt(index.ventas);
+                    })
+                
+                console.log(mes);
+                console.log(ventas);
+
+                myChart.config.data.labels = mes;
+                myChart.config.data.datasets[0].data = ventas;
+                myChart.update();
+            });
+
+                    const data = {
+                    
+                        labels : ['Lunes', 'Martes', 'Miercoles'],
+                        datasets : [{
+                            label: 'Empleados',
+                            data : [1],
+                            backgroundColor: [
+                                    'rgba(233, 0, 120, 0.7)',  // Bar 1
+                                    'rgba(90, 216, 236, 0.7)',  // Bar 2
+                                    'rgba(159, 145, 247, 0.3)',  // Bar 3
+                                    'rgba(141, 230, 32, 0.7)',  // Bar 4
+                                    'rgba(132, 105, 244, 0.7)', // Bar 5
+                                    'rgba(255, 135, 0, 0.7)'   // Bar 6
+                                ],
+                            
+                        }]
+                    };
+
+                    const config = {
+                        type: 'pie',
+                        data,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero : true
+                                }
+                            }
+                        }
+                    };
+
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+//--------------------------------Producto Mas Vendido-------------------------------
+
+async function productoMasVendido(){
+    const url = 'http://localhost:3000/proMasVend/'
+    const response = await fetch(url);
+
+    const proMasVendido = await response.json();
+    console.log(proMasVendido);
+
+    return proMasVendido;
+}
+
+productoMasVendido().then(proMasVendido =>{
+    const topProducto = proMasVendido.map(
+        function(index){
+            return index.pro_nombre;
+        }
+    );
+    console.log(topProducto)
+    document.querySelector("#MasVendido").innerHTML = topProducto;
+})
+
+//-----------------------------Producto Menos Vendido---------------------------------
+
+async function productoMenosVendido(){
+    const url = 'http://localhost:3000/proMenosVend/'
+    const response = await fetch(url);
+
+    const proMenosVendido = await response.json();
+    console.log(proMenosVendido);
+
+    return proMenosVendido;
+}
+
+productoMenosVendido().then(proMenosVendido =>{
+    const minProducto = proMenosVendido.map(
+        function(index){
+            return index.pro_nombre;
+        }
+    );
+    console.log(minProducto)
+    document.querySelector("#MenosVendido").innerHTML = minProducto;
+})
+
+//----------------------------Grafico 2-----------------------------
+
+async function porcenMetodosPago() {
+                const url = 'http://localhost:3000/porcenMetPago/'
+                const response = await fetch(url);
+
+                const usoMetPago = await response.json();
+                console.log(usoMetPago);
+
+                return usoMetPago;
+            }
+
+            porcenMetodosPago().then(usoMetPago => {
+                const metpagoefectivo = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.efectivo);
+                    })
+
+                    const metpagodebito = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.debito);
+                    })
+
+                    const metpagocredito = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.credito);
+                    })
+
+                    const metpagopmov = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.pagomovil);
+                    })
+
+                    const metpagozelle = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.zelle);
+                    })
+
+                    const metpagopaypal = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.paypal);
+                    })
+
+                    const metpagozinli = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.zinli);
+                    })
+
+                    const metpagocheque = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.cheque);
+                    })
+
+                    const metpagopuntos = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.puntos);
+                    })
+             /*       //Valores
+                const porcentaje = usoMetPago.map(
+                    function(index){
+                        return parseInt(index.tie_clave);
+                    }) */
+                
+
+
+                
+
+                porcentajes = metpagoefectivo.concat(metpagodebito,metpagocredito,metpagopmov,metpagozelle,metpagopaypal,metpagozinli,metpagocheque,metpagopuntos) 
+                console.log(porcentajes);
+                // myChart4.data.labels = metpago;
+                myChart4.data.datasets[0].data = porcentajes;                
+                myChart4.update();
+            });
+
+                    const config2 = {
+                        type: 'bar',
+                        data : {
+                                labels : ['Efectivo', 'Debito', 'Credito','PagoMovil','Zelle','Paypal','Zinli','Cheque','Puntos'],
+                                    datasets : [{
+                                    label: 'Pagos',
+                                    data : [1],
+                                backgroundColor: [
+                                    'rgba(233, 0, 120, 0.7)',  // Bar 1
+                                    'rgba(90, 216, 236, 0.7)',  // Bar 2
+                                    'rgba(159, 145, 247, 0.3)', //Bar 3
+                                    'rgba(141, 230, 32, 0.7)',  // Bar 4
+                                    'rgba(132, 105, 244, 0.7)', // Bar 5
+                                    'rgba(255, 135, 0, 0.7)'   // Bar 6
+                                    ],
+                                    borderColor : [
+                                    'rgba(255, 26, 104, 1)',  // Bar 1
+                                    'rgba(54, 162, 235, 1)',  // Bar 2
+                                    'rgba(255, 206, 86, 1)',  // Bar 3
+                                    'rgba(75, 192, 192, 1)',  // Bar 4
+                                    'rgba(153, 102, 255, 1)', // Bar 5
+                                    'rgba(255, 159, 64, 1)'   // Bar 6
+                                ]
+                            }]
+
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero : true
+                                }
+                            }
+                        }
+                    };
+
+    const myChart4 = new Chart(
+        document.getElementById('myChart4'),
+        config2
+    );
+
+//---------------------------Grafico 3--------------------------------
+
+async function usoPuntos() {
+                const url = 'http://localhost:3000/usoPuntos/'
+                const response = await fetch(url);
+
+                const puntos = await response.json();
+                console.log(puntos);
+
+                return puntos;
+            }
+
+            usoPuntos().then(puntos => {
+                const puntosOtorgados = puntos.map(
+                    function(index){
+                        return parseInt(index.otorgados);
+                    })
+                const puntosCanjeados = puntos.map(
+                    function(index){
+                        return parseInt(index.canjeados);
+                    })
+                
+                console.log(puntosCanjeados);
+                console.log(puntosOtorgados);
+
+                datos = puntosCanjeados.concat(puntosOtorgados);
+                myChart5.data.datasets[0].data = datos;
+               // myChart5.data.datasets[0].data = puntosOtorgados;
+                myChart5.update();
+            });
+
+                    const config3 = {
+                        type: 'doughnut',
+                        data : {
+                                labels : ['Puntos Canjeados', 'Puntos Otorgados'],
+                                    datasets : [{
+                                    label: 'Puntos',
+                                    data : [1],
+                                backgroundColor: [
+                                    'rgba(233, 0, 120, 0.7)',  // Bar 1
+                                    'rgba(90, 216, 236, 0.7)',  // Bar 2
+                                    'rgba(159, 145, 247, 0.3)',  // Bar 3
+                                    'rgba(141, 230, 32, 0.7)',  // Bar 4
+                                    'rgba(132, 105, 244, 0.7)', // Bar 5
+                                    'rgba(255, 135, 0, 0.7)'   // Bar 6
+                                    ],
+                               
+                            }]
+
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero : true
+                                }
+                            }
+                        }
+                    };
+
+    const myChart5 = new Chart(
+        document.getElementById('myChart5'),
+        config3
+    );
+
+
+//--------------------Cantidad de Ventas en línea---------------------
+
+async function ventasOnline(){
+    const url = 'http://localhost:3000/ventasOnline/'
+    const response = await fetch(url);
+
+    const cantVentas = await response.json();
+    console.log(cantVentas);
+
+    return cantVentas;
+}
+
+ventasOnline().then(cantVentas =>{
+    const cantidad = cantVentas.map(
+        function(index){
+            return parseInt(index.count);
+        }
+    );
+    console.log(cantidad)
+    document.querySelector("#CantVentasOnline").innerHTML = cantidad;
+})
+
+
+//-------------------Grafico 4---------------------
+
+async function ventasPorTienda() {
+                const url = 'http://localhost:3000/ventasxTienda/'
+                const response = await fetch(url);
+
+                const ventasTienda = await response.json();
+                console.log(ventasTienda);
+
+                return ventasTienda;
+            }
+
+            ventasPorTienda().then(ventasTienda => {
+                const tiendas = ventasTienda.map(
+                    function(index){
+                        return index.tie_nombre;
+                    })
+                const ventas = ventasTienda.map(
+                    function(index){
+                        return parseInt(index.count);
+                    })
+                
+                console.log(tiendas);
+                console.log(ventas);
+
+                myChart7.data.labels = tiendas;
+                myChart7.data.datasets[0].data = ventas;
+                myChart7.update();
+            });
+
+                    const config4 = {
+                        type: 'bar',
+                        data : {
+                                labels : ['Lunes', 'Martes', 'Miercoles'],
+                                    datasets : [{
+                                    label: 'Ventas por Tienda',
+                                    data : [1, 2, 8, 2, 2, 3, 2, 3, 24, 9, 3, 5, 5, 6, 6, 4, 4, 2, 3, 3, 3],
+                                backgroundColor: [
+                                    'rgba(233, 0, 120, 0.7)',  // Bar 1
+                                    'rgba(90, 216, 236, 0.7)',  // Bar 2
+                                    'rgba(159, 145, 247, 0.3)',  // Bar 3
+                                    'rgba(141, 230, 32, 0.7)',  // Bar 4
+                                    'rgba(132, 105, 244, 0.7)', // Bar 5
+                                    'rgba(255, 135, 0, 0.7)'   // Bar 6
+                                    ],
+                                    borderColor : [
+                                    'rgba(255, 26, 104, 1)',  // Bar 1
+                                    'rgba(54, 162, 235, 1)',  // Bar 2
+                                    'rgba(255, 206, 86, 1)',  // Bar 3
+                                    'rgba(75, 192, 192, 1)',  // Bar 4
+                                    'rgba(153, 102, 255, 1)', // Bar 5
+                                    'rgba(255, 135, 64, 1)'   // Bar 6
+                                ]
+                            }]
+
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero : true
+                                }
+                            }
+                        }
+                    };
+
+    const myChart7 = new Chart(
+        document.getElementById('myChart7'),
+        config4
+    );
+
+
+</script>
+
+</body>
+</html>

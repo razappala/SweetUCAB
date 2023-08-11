@@ -1,0 +1,422 @@
+create table Producto(
+    
+    pro_clave SERIAL primary key,
+    pro_nombre VARCHAR(50) not null,
+    pro_historia TEXT not null ,
+    pro_precio_actual NUMERIC(10,2) not null,
+    pro_peso_neto NUMERIC(4,2) not null,
+    pro_beneficio TEXT    
+); 
+
+create table Sabor(  
+    
+    sab_id SERIAL primary key,
+    sab_tipo VARCHAR(50) UNIQUE not null,
+    sab_descripcion TEXT 
+);
+
+create table Color(  
+    
+    col_id SERIAL primary key,
+    col_tipo VARCHAR(10) UNIQUE not null,
+    col_descripcion TEXT   
+);
+
+create table Tipo(  
+    
+    tip_id SERIAL primary key,
+    tip_nombre VARCHAR(10) UNIQUE not null,
+    tip_descripcion TEXT    
+);
+
+create table Forma( 
+    
+    for_id SERIAL primary key,
+    for_tipo VARCHAR(10) UNIQUE not null,
+    for_descripcion TEXT   
+);
+
+create table Sabor_Producto (
+    
+    sp_id SERIAL primary key,
+    sab_id INTEGER not null,
+    pro_clave INTEGER not null   
+);
+
+create table Color_Producto (
+    
+    cp_id SERIAL primary key,
+    col_id INTEGER not null,
+    pro_clave INTEGER not null   
+);
+
+create table Imagen (
+    
+    img_id SERIAL primary key,
+    img_nombre VARCHAR(20)not null,
+    img_url VARCHAR(100) not null
+);
+
+create table Descuento( 
+    
+    des_id SERIAL primary key,
+    des_fecha_inicio DATE not null,
+    des_fecha_fin DATE,
+    des_porcentaje NUMERIC(2) not null,
+    des_codigo VARCHAR(15) not null    
+);
+
+create table Revista(    
+    
+    rev_id SERIAL primary key,
+    rev_fecha_publi DATE not null,
+    rev_fecha_fin DATE not null    
+);
+
+create table Tienda(
+    
+    tie_clave SERIAL primary key,
+    tie_nombre varchar(50) not null,
+    tie_tipo BOOLEAN not null -- F=online T=fisica
+);
+
+create table Producto_Tienda(
+    
+    pt_id SERIAL primary key,-------
+    pro_clave INTEGER not null,
+    tie_clave INTEGER not null,
+    pt_cantidad NUMERIC(100) not null   
+);
+
+create table Detalle_Pedido (
+    
+    dp_id SERIAL primary key,
+    ped_numero_compra varchar(20) not null,
+    pt_id INTEGER not null, --no se coloca entonces el por_clave ni el tie_clave?
+    dp_cantidad NUMERIC(10) not null,
+    dp_precio NUMERIC(10,2) not null,
+    dp_peso_total NUMERIC(3)   
+);
+
+create table Detalle_Orden(
+    
+    rin_id INTEGER not null,  
+    pt_id INTEGER not null,
+    do_id SERIAL primary key,
+    do_cantidad NUMERIC(10) not null
+);
+
+create table Reposicion_Inventario(
+    
+    rin_id SERIAL primary key,
+    rin_nombre_pedido VARCHAR(20) not null,
+    rin_descripcion TEXT not null,
+    rin_fecha DATE not null
+);
+
+create table Metodo_de_pago_Efectivo(
+    
+    mpa_id SERIAL primary key,
+    mpaE_denominacion VARCHAR(25) not null
+);
+
+create table Metodo_de_pago_Tarjeta_debito(
+    
+    mpa_id SERIAL primary key,
+    mpaTd_tipo_cuenta BOOLEAN not null, --F=corriente V=ahorro
+    mpaTd_nro_cuenta VARCHAR(24) not null unique,
+    mpaTd_clave NUMERIC(6) not null
+);
+
+create table Metodo_de_pago_Tarjeta_credito(
+    
+    mpa_id SERIAL primary key,
+    mpaTc_nro_tarjeta VARCHAR(20) not null UNIQUE,
+    mpaTc_fecha_vencimiento DATE not null,
+    mpaTc_cvv NUMERIC(3) not null,
+    mpaTc_tipo VARCHAR(20) not null    
+);
+
+create table Metodo_de_Pago_Pago_movil(  
+    
+    mpa_id SERIAL primary key,
+    mpaPm_nro_telf VARCHAR(11) not null unique   
+);
+
+create table Metodo_de_Pago_Zelle(
+    
+    mpa_id SERIAL primary key,
+    mpaZ_correo VARCHAR(256) not null unique
+);
+
+create table Metodo_de_Pago_Paypal(
+    
+    mpa_id SERIAL primary key,
+    mpaPp_nro_cuenta VARCHAR(24) not null UNIQUE,
+    mpaPp_correo VARCHAR(256) not null UNIQUE
+);
+
+create table Metodo_de_Pago_Zinli(  
+    
+    mpa_id SERIAL primary key,
+    mpaZi_correo VARCHAR(256) not null unique    
+);
+
+create table Metodo_de_Pago_Cheque(
+    
+    mpa_id SERIAL primary key,
+    mpaCh_numero NUMERIC(20) not null UNIQUE,
+    mpaCh_nrocuenta NUMERIC (24) not null  
+);
+
+create table Metodo_de_Pago_Canje_punto(
+    
+    mpa_id SERIAL primary key
+);
+
+create table Valor(
+    
+    val_id SERIAL primary key,
+    val_precio NUMERIC(10) not null,
+    val_fecha_hora_inicio TIMESTAMP not null,
+    val_fecha_hora_fin TIMESTAMP
+);
+
+create table Punto(
+    
+    pun_id SERIAL primary key,
+    pun_acumulados NUMERIC(8) not null,
+    pun_obtenido NUMERIC(8) not null    
+);
+
+CREATE TABLE Pedido (  
+    
+    ped_numero_compra varchar(15) primary key,
+    ped_fecha Date not null,
+    ped_total numeric(100,2) not null,
+    ped_iva numeric(20,2) not null  
+);
+
+create table Tienda_Departamento ( 
+    
+    td_id SERIAL primary key,
+    tie_clave INTEGER not null,
+    dep_id INTEGER not null   
+);
+
+Create table Lugar (
+    
+    lug_id SERIAL primary key,
+    lug_nombre varchar(20) not null,
+    lug_tipo varchar(20) not null,
+    FK_lugar SERIAL
+);
+
+Create table Rol (
+    
+    rol_clave SERIAL primary key,
+    rol_nombre varchar(20) not null,
+    rol_descripcion varchar(20) not null 
+);
+
+create table Usuario (
+    
+    usu_id SERIAL primary key,
+    usu_username VARCHAR(20) not null unique,
+    usu_contrasena VARCHAR(14) not null unique
+);
+
+Create table Funcion (
+    
+    fun_id SERIAL primary key,
+    fun_tipo varchar(100) not null,
+    fun_descripcion varchar(100) not null
+);
+
+Create table Rol_Funcion (
+
+    rf_id SERIAL primary key,
+    rol_clave INTEGER not null,
+    fun_id INTEGER not null
+);
+
+Create table Persona_persona_natural (
+    
+    per_id SERIAL primary key,
+    per_RIF varchar(20) not null unique,
+    perN_codigo_carnet varchar(20) not null unique,
+    perN_cedula varchar(20) not null unique,
+    perN_p_nombre varchar(20) not null,
+    perN_s_nombre varchar(20),
+    perN_p_apellido varchar(30) not null,
+    perN_s_apellido varchar(30),
+    perN_direccion varchar(50) not null
+);
+
+Create table Persona_persona_juridica (
+    
+    per_id SERIAL primary key,
+    per_RIF varchar(20) not null unique,
+    perJ_denom_comercial varchar(20) not null,
+    perJ_razon_social varchar(20) not null,
+    perJ_pagina_web varchar(50) not null unique,
+    perJ_capital numeric(50,2) not null,
+    perJ_direccion_fiscal varchar(50) not null,
+    perJ_direccion_principal varchar(50) not null
+);
+
+Create table Persona_Empleado (
+    
+    per_id SERIAL primary key,
+    per_RIF varchar(20) not null unique,
+    emp_cedula numeric(10) not null unique,
+    emp_salario numeric(100,2) not null
+);
+
+Create table Pedido_Estatus (
+    
+    pe_id SERIAL primary key,
+    ped_numero_compra varchar(15) not null,
+    est_clave SERIAL not null,
+    pe_fecha_hora_inicio timestamp not null,
+    pe_fecha_hora_fin timestamp
+);
+
+Create table Pedido_Met_pago (
+    
+    pm_id SERIAL primary key,
+    ped_numero_compra varchar(15) not null,
+    pm_monto numeric(100,2) not null, 
+    mpa_id_efectivo INTEGER unique,
+    mpa_id_tar_deb INTEGER unique,
+    mpa_id_tar_cred INTEGER unique,
+    mpa_id_pago_movil INTEGER unique,
+    mpa_id_zelle INTEGER unique,
+    mpa_id_paypal INTEGER unique,
+    mpa_id_zinli INTEGER unique,
+    mpa_id_cheque INTEGER unique,
+    mpa_id_canje_punto INTEGER unique
+);
+
+Create table Estatus (
+    
+    est_clave SERIAL primary key,
+    est_tipo varchar(20) not null unique
+);
+
+Create table beneficio (
+    
+    ben_id SERIAL primary key,
+    ben_nombre_aporte varchar(50) not null,
+    ben_descripcion varchar(50) not null,
+    ben_fecha_hora_inicio timestamp not null,
+    ben_fecha_hora_fin timestamp
+);
+
+Create table beneficio_empleado (
+    
+    be_id SERIAL primary key,
+    per_id INTEGER not null,
+    ben_id INTEGER not null      
+);
+
+Create table departamento (
+    
+    dep_id SERIAL primary key,
+    dep_nombre varchar(50) not null
+);
+
+Create table control_asistencia (
+    
+    cas_id SERIAL primary key,
+    cas_hora_entrada time not null,
+    cas_hora_salida time not null,
+    cas_fecha varchar(9) not null
+);
+
+Create table horario(
+    
+    hor_id SERIAL primary key,
+    hor_dia varchar(9) not null,
+    hor_hora_inicio time not null,
+    hor_hora_fin time not null
+);
+
+Create table empleado_horario (
+    
+    eh_id SERIAL primary key,
+    per_id INTEGER not null,
+    hor_id INTEGER not null
+);
+
+Create table telefono (
+    
+    tel_id SERIAL primary key,
+    tel_numero varchar(12) not null unique,
+    tel_cod_area varchar(4) not null
+);
+
+Create table persona_contacto (
+    
+    pco_id SERIAL primary key,
+    pco_nombre varchar(50) not null,
+    pco_apellido varchar(50) not null
+);
+
+Create table inventario ( --recordar a rafa cambiar esta
+    
+    inv_id SERIAL primary key,
+    alm_id INTEGER not null,
+    pt_id INTEGER not null,
+    inv_cantidad numeric(100) not null 
+);
+
+Create table almacen (
+    
+    alm_id SERIAL primary key,
+    alm_nombre varchar(20) not null,
+    alm_tipo varchar(8) not null,
+    FK_almacen SERIAL
+);
+
+Create table orden_reposicionI (
+    
+    ore_id SERIAL primary key,
+    ore_nombre varchar(25) not null,
+    ore_descripcion varchar(500) not null,
+    alm_id_pide INTEGER not null,
+    alm_id_recibe INTEGER not null 
+);
+
+Create table detalle_interno (
+    
+    di_id SERIAL primary key,
+    di_cantidad numeric(100) not null, 
+    ore_id INTEGER not null unique
+);
+
+Create table banco (
+    
+    ban_id SERIAL primary key,
+    ban_nombre varchar(30) not null
+);
+
+Create table Ord_rep_Estatus (
+
+    oe_id SERIAL primary key,
+    ore_id INTEGER not null,   
+    est_clave INTEGER not null,
+    oe_fecha_hora_inicio timestamp not null,
+    oe_fecha_hora_fin timestamp 
+);
+
+Create table Rep_inv_Estatus (
+    
+    re_id INTEGER primary key,
+    rin_id INTEGER not null,
+    est_clave INTEGER not null,
+    re_fecha_hora_inicio timestamp not null,
+    re_fecha_hora_fin timestamp 
+);
+
+

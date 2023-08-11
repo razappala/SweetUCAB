@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>DataTables estilo Bootstrap 5 - NodeJS y Express</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.min.css"> 
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap5.min.css">
+
+</head>
+<body>
+
+    <nav class="navbar has-shadow is-white">
+        <!--logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <img src="imagenes/logo.png" alt="logo pag" style="max-height: 60px" class="py-2 px-2">
+            </a>
+        </div>
+
+        <div class="navbar-menu has-background-danger" id="nav-links">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">Inicio</a>
+                <a class="navbar-item" href="novedades.html">Novedades</a>
+                <a class="navbar-item" href="productos.html">Productos</a>
+                <a class="navbar-item" href="sweetFlyer.html">Descuentos</a>
+                <a class="navbar-item" href="contacto.html">Contáctanos</a>
+            </div>
+            <div class="navbar-end has-background-danger">
+                <a href="carrito.html" class="navbar-item">
+                    <img src="imagenes/carrito.png" alt="carrito">
+                </a>
+                <a href="login.html" class="navbar-item">
+                    Iniciar Sesion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="column has-text-centered">
+		<br><br>
+		<h2 class="subtitle is-2 has-text-centered is-italic has-text-weight-bold">Registro de Productos</h2>
+	</div>
+
+    <div class="container-fluid">
+        <div class="row shadow-lg p-3 mb-5">
+            <div class="col">
+                <table id="tablaProductos" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">NOMBRE</th>
+                        <th class="text-center" >HISTORIA</th>
+                        <th class="text-center" >PRECIO</th>              
+                        <th class="text-center">PESO NETO</th> 
+                        <th class="text-center">BENEFICIO</th>   
+                        <th class="text-center">SABOR</th>      
+                        <th class="text-center">COLOR</th>      
+                        <th class="text-center">TIPO</th>      
+                        <th class="text-center">FORMA</th>
+                        <th class="text-center">ACCIONES</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                </table> 
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para CRUD-->
+    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>                
+                </div>
+                <form name="formProductos" id="formProductos">    
+                    <div class="modal-body">                
+                            <input id="id" hidden>
+
+                            <label for="" class="col-form-label">NOMBRE</label>
+                            <input id="pro_nombre" type="text" class="form-control" name="pro_nombre" required>  
+
+                            <label for="" class="col-form-label">HISTORIA</label>
+                            <input type="textarea" class="form-control" id="pro_historia" name="pro_historia" required>
+
+                            <label for="" class="col-form-label">PRECIO</label>
+                            <input type="number" class="form-control" id="pro_precio_actual" name="pro_precio_actual" required>
+
+                            <label for="" class="col-form-label">PESO NETO</label>
+                            <input type="number" class="form-control" id="pro_peso_neto" name="pro_peso_neto" required>
+
+                            <label for="" class="col-form-label">BENEFICIO</label>
+                            <input type="textarea" class="form-control" id="pro_beneficio" name="pro_beneficio">
+
+                            <br>
+
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field is-narrow">
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select name="sab_tipo" id="sab_tipo">
+                                                    <option disabled selected>Sabor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-narrow">
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select name="col_tipo" id="col_tipo">
+                                                    <option disabled selected>Color</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-narrow">
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select name="tip_nombre" id="tip_nombre" >
+                                                    <option disabled selected>Tipo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-narrow">
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select name="for_tipo" id="for_tipo">
+                                                    <option disabled selected>Forma</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                    </div>
+                </form>    
+            </div>
+        </div>
+    </div>  
+
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap5.min.js"></script>        
+<script>
+$(document).ready(function() {   
+    let url = 'http://localhost:3000/productos/';
+    let opcion = null;
+    let pro_clave, pro_clave2, pro_nombre, pro_nombre2, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, sab_tipo, col_tipo,  sab_tipo2, col_tipo2, tip_nombre, for_tipo
+    //MOSTRAR
+    let tablaProductos = $('#tablaProductos').DataTable({            
+        "ajax":{
+            "url": url,
+            "dataSrc":""
+        },
+        "columns":[
+            {"data":"pro_clave"},
+            {"data":"pro_nombre"},
+            {"data":"pro_historia"},
+            {"data":"pro_precio_actual"},
+            {"data":"pro_peso_neto"},
+            {"data":"pro_beneficio"},
+            {"data":"sab_tipo"},
+            {"data":"col_tipo"},
+            {"data":"tip_nombre"},
+            {"data":"for_tipo"},
+            {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btn-sm btnEditar'>Editar</button><button class='btn btn-danger btn-sm btnBorrar'>Borrar</button></div></div>"}
+        ],
+        "columnDefs":[{
+            "targets":[2],
+        }]              
+    });
+    //CREAR
+    $("#btnCrear").click(function(){
+        opcion='crear';            
+        id=null;
+        $("#formProductos").trigger("reset");
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Crear Producto");
+        $('#modalCRUD').modal('show');	    
+
+            fetch("http://localhost:3000/sabor/")
+            .then((response)=>response.json())
+            .then((sabores)=>{
+                let listaSabores=document.querySelector("#sab_tipo");
+
+                    for(const itemSabor of sabores){ 
+                        let option="<option value="+itemSabor.sab_id+">"+itemSabor.sab_tipo+"</option>";
+
+                        listaSabores.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/color/")
+            .then((response)=>response.json())
+            .then((colores)=>{
+                let listaColores=document.querySelector("#col_tipo");
+
+                    for(const itemColor of colores){ 
+                        let option="<option value="+itemColor.col_id+">"+itemColor.col_tipo+"</option>";
+
+                        listaColores.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/tipo/")
+            .then((response)=>response.json())
+            .then((tipos)=>{
+                let listaTipos=document.querySelector("#tip_nombre");
+
+                    for(const itemTipo of tipos){ 
+                        let option="<option value="+itemTipo.tip_id+">"+itemTipo.tip_nombre+"</option>";
+
+                        listaTipos.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/forma/")
+            .then((response)=>response.json())
+            .then((formas)=>{
+                let listaFormas=document.querySelector("#for_tipo");
+
+                    for(const itemForma of formas){ 
+                        let option="<option value="+itemForma.for_id+">"+itemForma.for_tipo+"</option>";
+
+                        listaFormas.innerHTML+=option;
+                    }
+            })
+
+    });    
+    //EDITAR        
+    $(document).on("click", ".btnEditar", function(){		            
+        opcion='editar';
+        fila = $(this).closest("tr");	        
+        pro_clave = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        pro_clave2 = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        pro_nombre = fila.find('td:eq(1)').text();
+        pro_nombre2 = fila.find('td:eq(1)').text();
+        pro_historia = fila.find('td:eq(2)').text();
+        pro_precio_actual = parseInt($(this).closest('tr').find('td:eq(3)').text());
+        pro_peso_neto = parseInt($(this).closest('tr').find('td:eq(4)').text());
+        pro_beneficio = fila.find('td:eq(5)').text()
+        sab_tipo = fila.find('td:eq(6)').text()
+        sab_tipo2 = fila.find('td:eq(6)').text()
+        col_tipo = fila.find('td:eq(7)').text()
+        col_tipo2 = fila.find('td:eq(7)').text()
+        tip_nombre = fila.find('td:eq(8)').text()
+        for_tipo = fila.find('td:eq(9)').text()
+
+        $("#pro_clave").val(pro_clave);
+        $("#pro_nombre").val(pro_nombre);
+        $("#pro_historia").val(pro_historia);
+        $("#pro_precio_actual").val(pro_precio_actual);
+        $("#pro_peso_neto").val(pro_peso_neto);
+        $("#pro_beneficio").val(pro_beneficio);
+        
+        fetch("http://localhost:3000/sabor/")
+            .then((response)=>response.json())
+            .then((sabores)=>{
+                let listaSabores=document.querySelector("#sab_tipo");
+
+                    for(const itemSabor of sabores){ 
+                        let option="<option value="+itemSabor.sab_id+">"+itemSabor.sab_tipo+"</option>";
+
+                        listaSabores.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/color/")
+            .then((response)=>response.json())
+            .then((colores)=>{
+                let listaColores=document.querySelector("#col_tipo");
+
+                    for(const itemColor of colores){ 
+                        let option="<option value="+itemColor.col_id+">"+itemColor.col_tipo+"</option>";
+
+                        listaColores.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/tipo/")
+            .then((response)=>response.json())
+            .then((tipos)=>{
+                let listaTipos=document.querySelector("#tip_nombre");
+
+                    for(const itemTipo of tipos){ 
+                        let option="<option value="+itemTipo.tip_id+">"+itemTipo.tip_nombre+"</option>";
+
+                        listaTipos.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/forma/")
+            .then((response)=>response.json())
+            .then((formas)=>{
+                let listaFormas=document.querySelector("#for_tipo");
+
+                    for(const itemForma of formas){ 
+                        let option="<option value="+itemForma.for_id+">"+itemForma.for_tipo+"</option>";
+
+                        listaFormas.innerHTML+=option;
+                    }
+            })
+
+            /*fetch("http://localhost:3000/sabor/")
+                .then((response)=>response.json())
+                .then((sabores)=>{
+                    let listaSabores=document.querySelector("#sab_tipo");
+
+                        for(const itemSabor of sabores){ 
+                            let option
+
+                            if(itemSabor.sab_tipo===sab_tipo){
+                                option="<option value="+itemSabor.sab_id+" selected>"+itemSabor.sab_tipo+"</option>";
+                            }else{
+                                option="<option value="+itemSabor.sab_id+">"+itemSabor.sab_tipo+"</option>";
+                            }
+
+                            listaSabores.innerHTML+=option;
+                        }
+                })
+
+            fetch("http://localhost:3000/color/")
+            .then((response)=>response.json())
+            .then((colores)=>{
+                let listaColores=document.querySelector("#col_tipo");
+
+                    for(const itemColor of colores){ 
+                        let option
+
+                        if(itemColor.col_tipo===col_tipo){
+                            option="<option value="+itemColor.col_id+" selected>"+itemColor.col_tipo+"</option>";
+                        }else{
+                            option="<option value="+itemColor.col_id+">"+itemColor.col_tipo+"</option>";
+                        }
+                        listaColores.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/tipo/")
+            .then((response)=>response.json())
+            .then((tipos)=>{
+                let listaTipos=document.querySelector("#tip_nombre");
+
+                    for(const itemTipo of tipos){ 
+                        let option
+
+                        if(itemTipo.tip_nombre===tip_nombre){
+                            option="<option value="+itemTipo.tip_id+" selected>"+itemTipo.tip_nombre+"</option>";
+                        }else{
+                            option="<option value="+itemTipo.tip_id+">"+itemTipo.tip_nombre+"</option>";
+                        }
+
+                        listaTipos.innerHTML+=option;
+                    }
+            })
+
+            fetch("http://localhost:3000/forma/")
+            .then((response)=>response.json())
+            .then((formas)=>{
+                let listaFormas=document.querySelector("#for_tipo");
+
+                    for(const itemForma of formas){ 
+                        let option
+
+                        if(itemForma.for_tipo===for_tipo){
+                            option="<option value="+itemForma.sab_id+" selected>"+itemForma.for_tipo+"</option>";
+                        }else{
+                            option="<option value="+itemForma.sab_id+">"+itemForma.for_tipo+"</option>";
+                        }
+
+                        listaFormas.innerHTML+=option;
+                    }
+            })*/
+       
+
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Editar Producto");
+        $('#modalCRUD').modal('show');	       
+    });
+
+     //BORRAR
+    $(document).on("click", ".btnBorrar", function(){
+        fila = $(this);           
+        pro_clave = parseInt($(this).closest('tr').find('td:eq(0)').text());     
+        console.log(pro_clave)       
+        Swal.fire({
+            title: '¿Confirma eliminar el registro?',                
+            showCancelButton: true,
+            confirmButtonText: `Confirmar`,                
+        }).then((result) => {               
+            if (result.isConfirmed) {
+
+                var newDelete= {
+                    pro_clave : pro_clave,
+                }
+
+                    fetch('http://localhost:3000/sabor_producto_delete', {
+                    method : "DELETE",
+                    body: JSON.stringify(newDelete),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                })
+
+
+
+                    fetch('http://localhost:3000/color_producto_delete', {
+                    method : "DELETE",
+                    body: JSON.stringify(newDelete),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                })
+
+
+
+                    $.ajax({
+                        url: 'http://localhost:3000/descuento_por_pro_clave/'+pro_clave,
+                        method: 'DELETE'
+                    });
+      
+
+
+                    
+
+                    $.ajax({
+                        url: "http://localhost:3000/productotienda/"+pro_clave,
+                        method: 'DELETE'
+                    });
+
+
+
+                    $.ajax({
+                    url: "http://localhost:3000/productos/"+pro_clave,
+                    method: 'DELETE',         
+                    success: function() {
+                        tablaProductos.row(fila.parents('tr')).remove().draw();                  
+                    }
+                });
+                Swal.fire('¡Registro Eliminado!', '', 'success')
+
+
+            } 
+        })
+    });     
+    //submit para el CREAR y EDITAR
+    $('#formProductos').submit(function(e){                                     
+        e.preventDefault();
+
+        //console.log($.trim($('#sab_id').val()))
+
+        var formulario = document.getElementById('formProductos');
+        const form = new FormData(formulario);
+        var newPost 
+
+        if(form.get('pro_beneficio')===''){
+            newPost = {
+                pro_nombre : form.get('pro_nombre'),
+                pro_historia : form.get('pro_historia'),
+                pro_precio_actual : form.get('pro_precio'),
+                pro_peso_neto : form.get('pro_peso_neto'),
+                pro_beneficio : null,
+                fk_tipo: formProductos.tip_nombre.value,
+                fk_forma: formProductos.for_tipo.value,
+            }
+        }else{
+            newPost = {
+                pro_nombre : form.get('pro_nombre'),
+                pro_historia : form.get('pro_historia'),
+                pro_precio_actual : form.get('pro_precio_actual'),
+                pro_peso_neto : form.get('pro_peso_neto'),
+                pro_beneficio : form.get('pro_beneficio'),
+                fk_tipo: formProductos.tip_nombre.value,
+                fk_forma: formProductos.for_tipo.value,
+            }
+        }
+        console.log(newPost)
+
+        var newPost2 = {
+            sab_id : formProductos.sab_tipo.value,
+            pro_nombre : form.get('pro_nombre')
+        }
+        console.log(newPost2)
+
+        var newPost3 = {
+            col_id : formProductos.col_tipo.value,
+            pro_nombre : form.get('pro_nombre')
+        }
+        console.log(newPost3)
+
+        if(opcion=='crear'){
+            fetch('http://localhost:3000/productos', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                },
+                success: function(data) {                       
+                    tablaProductos.ajax.reload(null, false);                        
+                }
+            }).then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+
+                fetch('http://localhost:3000/sabor_producto', {
+                    method : "POST",
+                    body: JSON.stringify(newPost2),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaProductos.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+
+                    fetch('http://localhost:3000/color_producto', {
+                        method : "POST",
+                        body: JSON.stringify(newPost3),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaProductos.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                    })
+
+                    //location.reload()
+                })
+            })
+        }
+
+        if(opcion=='editar'){
+            console.log(pro_clave)
+
+            fetch("http://localhost:3000/productos/"+pro_clave, {
+                method : "PUT",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                },
+                success: function(data) {                       
+                    //window.location.reload()                        
+                }
+            })
+            .then(data=>{
+                console.log(data)
+            })
+
+            var newPut = {
+                sab_id : formProductos.sab_tipo.value,
+                pro_clave2:pro_clave2,
+                sab_tipo2: sab_tipo2
+            }
+
+            console.log(newPut)
+
+            fetch("http://localhost:3000/sabor_producto_put/", {
+                method : "PUT",
+                body: JSON.stringify(newPut),
+                headers:{
+                    "Content-type": "application/json"
+                },
+                success: function(data) {                       
+                   // window.location.reload()                        
+                }
+            })
+            .then(data=>{
+                console.log(data)
+            })
+
+            var newPut2 = {
+                col_id : formProductos.col_tipo.value,
+                pro_clave2: pro_clave2,
+                col_tipo2: col_tipo2
+            }
+
+            console.log(newPut2)
+
+            fetch("http://localhost:3000/color_producto_put/", {
+                method : "PUT",
+                body: JSON.stringify(newPut2),
+                headers:{
+                    "Content-type": "application/json"
+                },
+                success: function(data) {                       
+                    //window.location.reload()                        
+                    }
+                })
+            .then(data=>{
+                console.log(data)
+            })
+        }  
+   	
+        $('#modalCRUD').modal('hide');	
+        
+
+    });
+});
+
+</script>
+<button id="btnCrear" class="button is-danger is-pulled-right">Crear nuevo Producto</button>
+</body>
+</html>

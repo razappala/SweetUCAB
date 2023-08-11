@@ -1,0 +1,979 @@
+CREATE TABLE IF NOT EXISTS public.sabor
+(
+    sab_id SERIAL,
+    sab_tipo character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    sab_descripcion text COLLATE pg_catalog."default",
+    CONSTRAINT sabor_pkey PRIMARY KEY (sab_id),
+    CONSTRAINT sabor_sab_tipo_key UNIQUE (sab_tipo)
+)
+
+CREATE TABLE IF NOT EXISTS public.color
+(
+    col_id SERIAL,
+    col_tipo character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    col_descripcion text COLLATE pg_catalog."default",
+    CONSTRAINT color_pkey PRIMARY KEY (col_id),
+    CONSTRAINT color_col_tipo_key UNIQUE (col_tipo)
+)
+
+CREATE TABLE IF NOT EXISTS public.tipo
+(
+    tip_id SERIAL,
+    tip_nombre character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    tip_descripcion text COLLATE pg_catalog."default",
+    CONSTRAINT tipo_pkey PRIMARY KEY (tip_id),
+    CONSTRAINT tipo_tip_nombre_key UNIQUE (tip_nombre)
+)
+
+CREATE TABLE IF NOT EXISTS public.forma
+(
+    for_id SERIAL,
+    for_tipo character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    for_descripcion text COLLATE pg_catalog."default",
+    CONSTRAINT forma_pkey PRIMARY KEY (for_id),
+    CONSTRAINT forma_for_tipo_key UNIQUE (for_tipo)
+)
+
+CREATE TABLE IF NOT EXISTS public.revista
+(
+    rev_id SERIAL,
+    rev_fecha_publi date NOT NULL,
+    rev_fecha_fin date NOT NULL CHECK (rev_fecha_fin > rev_fecha_publi),
+    CONSTRAINT revista_pkey PRIMARY KEY (rev_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.producto
+(
+    pro_clave SERIAL,
+    pro_nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    pro_historia text COLLATE pg_catalog."default" NOT NULL,
+    pro_precio_actual numeric(10,2) NOT NULL CHECK(pro_precio_actual > 0),
+    pro_peso_neto numeric(5,2) NOT NULL CHECK(pro_peso_neto > 0),
+    pro_beneficio text COLLATE pg_catalog."default",
+    fk_tipo integer NOT NULL,
+    fk_forma integer NOT NULL,
+    CONSTRAINT producto_pkey PRIMARY KEY (pro_clave),
+    CONSTRAINT fk_producto_forma FOREIGN KEY (fk_forma)
+        REFERENCES public.forma (for_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_producto_tipo FOREIGN KEY (fk_tipo)
+        REFERENCES public.tipo (tip_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.color_producto
+(
+    cp_id SERIAL,
+    col_id integer NOT NULL,
+    pro_clave integer NOT NULL,
+    CONSTRAINT color_producto_pkey PRIMARY KEY (cp_id),
+    CONSTRAINT fk_colpro_color FOREIGN KEY (col_id)
+        REFERENCES public.color (col_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_colpro_producto FOREIGN KEY (pro_clave)
+        REFERENCES public.producto (pro_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.sabor_producto
+(
+    sp_id SERIAL,
+    sab_id integer NOT NULL,
+    pro_clave integer NOT NULL,
+    CONSTRAINT sabor_producto_pkey PRIMARY KEY (sp_id),
+    CONSTRAINT fk_sabpro_producto FOREIGN KEY (pro_clave)
+        REFERENCES public.producto (pro_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_sabpro_sabor FOREIGN KEY (sab_id)
+        REFERENCES public.sabor (sab_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.imagen
+(
+    img_id SERIAL,
+    img_nombre character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    img_url character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    fk_producto integer NOT NULL,
+    CONSTRAINT imagen_pkey PRIMARY KEY (img_id),
+    CONSTRAINT fk_img_producto FOREIGN KEY (fk_producto)
+        REFERENCES public.producto (pro_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.descuento
+(
+    des_id SERIAL,
+    des_fecha_inicio date NOT NULL,
+    des_fecha_fin date CHECK (des_fecha_fin > des_fecha_inicio),
+    des_porcentaje numeric(3) NOT NULL,
+    des_codigo character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    fk_producto integer NOT NULL,
+    fk_revista integer NOT NULL,
+    CONSTRAINT descuento_pkey PRIMARY KEY (des_id),
+    CONSTRAINT fk_descuento_producto FOREIGN KEY (fk_producto)
+        REFERENCES public.producto (pro_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_descuento_revista FOREIGN KEY (fk_revista)
+        REFERENCES public.revista (rev_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.lugar
+(
+    lug_id SERIAL,
+    lug_nombre character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    lug_tipo character varying(20) COLLATE pg_catalog."default" NOT NULL CHECK(lug_tipo in('Estado', 'Parroquia', 'Municipio')),
+    fk_lugar SERIAL NOT NULL, 
+    CONSTRAINT lugar_pkey PRIMARY KEY (lug_id),
+    CONSTRAINT lugar_lug_nombre_key UNIQUE (lug_nombre),
+    CONSTRAINT fk_lugar_lugar FOREIGN KEY (fk_lugar)
+        REFERENCES public.lugar (lug_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.tienda
+(
+    tie_clave SERIAL,
+    tie_nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    tie_tipo boolean NOT NULL,  --True= Tienda Fisica, False =Tienda Online
+    fk_lugar integer NOT NULL,
+    CONSTRAINT tienda_pkey PRIMARY KEY (tie_clave),
+    CONSTRAINT tienda_tie_nombre_key UNIQUE (tie_nombre),
+    CONSTRAINT fk_tienda_lugar FOREIGN KEY (fk_lugar)
+        REFERENCES public.lugar (lug_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.producto_tienda
+(
+    pt_id SERIAL,
+    pro_clave integer NOT NULL,
+    tie_clave integer NOT NULL, 
+    pt_cantidad numeric(100,0) NOT NULL CHECK(pt_cantidad >= 0),
+    CONSTRAINT producto_tienda_pkey PRIMARY KEY (pt_id),
+    CONSTRAINT fk_protie_producto FOREIGN KEY (pro_clave)
+        REFERENCES public.producto (pro_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_protie_tienda FOREIGN KEY (tie_clave)
+        REFERENCES public.tienda (tie_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.reposicion_inventario
+(
+    rin_id SERIAL,
+    rin_nombre_pedido character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    rin_descripcion text COLLATE pg_catalog."default" NOT NULL,
+    rin_fecha date NOT NULL,
+    CONSTRAINT reposicion_inventario_pkey PRIMARY KEY (rin_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.detalle_orden
+(
+    do_id SERIAL,
+    rin_id integer NOT NULL,
+    pt_id integer NOT NULL,
+    do_cantidad numeric(10) NOT NULL CHECK (do_cantidad > 0),
+    CONSTRAINT detalle_orden_pkey PRIMARY KEY (do_id),
+    CONSTRAINT fk_detor_productotienda FOREIGN KEY (pt_id)
+        REFERENCES public.producto_tienda (pt_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_detor_reposicion_inventario FOREIGN KEY (rin_id)
+        REFERENCES public.reposicion_inventario (rin_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.departamento
+(
+    dep_id SERIAL,
+    dep_nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT departamento_pkey PRIMARY KEY (dep_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.tienda_departamento
+(
+    td_id SERIAL,
+    tie_clave integer NOT NULL,
+    dep_id integer NOT NULL,
+    CONSTRAINT tienda_departamento_pkey PRIMARY KEY (td_id),
+    CONSTRAINT fk_tiedep_departamento FOREIGN KEY (dep_id)
+        REFERENCES public.departamento (dep_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_tiedep_tienda FOREIGN KEY (tie_clave)
+        REFERENCES public.tienda (tie_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.persona_persona_natural
+(
+    per_id SERIAL,
+    per_rif character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    pern_codigo_carnet character varying(20) COLLATE pg_catalog."default",
+    pern_cedula character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    pern_p_nombre character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    pern_s_nombre character varying(20) COLLATE pg_catalog."default",
+    pern_p_apellido character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    pern_s_apellido character varying(30) COLLATE pg_catalog."default",
+    pern_direccion character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    fk_lugar integer NOT NULL,
+    fk_tienda integer NOT NULL,
+    CONSTRAINT persona_persona_natural_pkey PRIMARY KEY (per_id),
+    CONSTRAINT persona_persona_natural_per_rif_key UNIQUE (per_rif),
+    CONSTRAINT persona_persona_natural_pern_cedula_key UNIQUE (pern_cedula),
+    CONSTRAINT persona_persona_natural_pern_codigo_carnet_key UNIQUE (pern_codigo_carnet),
+    CONSTRAINT fk_persona_natural_lugar FOREIGN KEY (fk_lugar)
+        REFERENCES public.lugar (lug_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_persona_natural_tienda FOREIGN KEY (fk_tienda)
+        REFERENCES public.tienda (tie_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.persona_persona_juridica
+(
+    per_id SERIAL,
+    per_rif character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    perj_denom_comercial character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    perj_razon_social character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    perj_pagina_web character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    perj_capital numeric(50,2) NOT NULL,
+    perj_direccion_fiscal character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    perj_direccion_principal character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    fk_lugar_principal integer NOT NULL,
+    fk_lugar_fiscal integer NOT NULL,
+    fk_tienda integer NOT NULL,
+    CONSTRAINT persona_persona_juridica_pkey PRIMARY KEY (per_id),
+    CONSTRAINT persona_persona_juridica_per_rif_key UNIQUE (per_rif),
+    CONSTRAINT persona_persona_juridica_perj_pagina_web_key UNIQUE (perj_pagina_web),
+    CONSTRAINT fk_persona_juridica_lugarfiscal FOREIGN KEY (fk_lugar_fiscal)
+        REFERENCES public.lugar (lug_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_persona_juridica_lugarprincp FOREIGN KEY (fk_lugar_principal)
+        REFERENCES public.lugar (lug_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_persona_juridica_tienda FOREIGN KEY (fk_tienda)
+        REFERENCES public.tienda (tie_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.persona_empleado
+(
+    per_id SERIAL,
+    per_rif character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    emp_cedula numeric(10) NOT NULL,
+    emp_salario numeric(100,2) NOT NULL,
+    fk_lugar integer NOT NULL,
+    fk_tienda integer NOT NULL,
+    fk_departamento integer NOT NULL,
+    CONSTRAINT persona_empleado_pkey PRIMARY KEY (per_id),
+    CONSTRAINT persona_empleado_emp_cedula_key UNIQUE (emp_cedula),
+    CONSTRAINT persona_empleado_per_rif_key UNIQUE (per_rif),
+    CONSTRAINT fk_persona_empleado_departamento FOREIGN KEY (fk_departamento)
+        REFERENCES public.departamento (dep_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_persona_empleado_lugar FOREIGN KEY (fk_lugar)
+        REFERENCES public.lugar (lug_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_persona_empleado_tienda FOREIGN KEY (fk_tienda)
+        REFERENCES public.tienda (tie_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.beneficio
+(
+    ben_id SERIAL,
+    ben_nombre_aporte character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    ben_descripcion character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    ben_fecha_hora_inicio timestamp without time zone NOT NULL,
+    ben_fecha_hora_fin timestamp without time zone CHECK(ben_fecha_hora_fin > ben_fecha_hora_inicio),
+    CONSTRAINT beneficio_pkey PRIMARY KEY (ben_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.beneficio_empleado
+(
+    be_id SERIAL,
+    per_id integer NOT NULL,
+    ben_id integer NOT NULL,
+    CONSTRAINT beneficio_empleado_pkey PRIMARY KEY (be_id),
+    CONSTRAINT fk_benem_beneficio FOREIGN KEY (ben_id)
+        REFERENCES public.beneficio (ben_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_benem_empleado FOREIGN KEY (per_id)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.persona_contacto
+(
+    pco_id SERIAL,
+    pco_nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    pco_apellido character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    fk_persona_juridica integer NOT NULL,
+    CONSTRAINT persona_contacto_pkey PRIMARY KEY (pco_id),
+    CONSTRAINT fk_persona_contacto_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.telefono
+(
+    tel_id SERIAL,
+    tel_numero character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    fk_persona_contacto integer,
+    CONSTRAINT telefono_pkey PRIMARY KEY (tel_id),
+    CONSTRAINT telefono_tel_numero_key UNIQUE (tel_numero),
+    CONSTRAINT fk_telefono_persona_contacto FOREIGN KEY (fk_persona_contacto)
+        REFERENCES public.persona_contacto (pco_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_telefono_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_telefono_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_telefono_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.control_asistencia
+(
+    cas_id SERIAL,
+    cas_hora_entrada time without time zone NOT NULL,
+    cas_hora_salida time without time zone NOT NULL CHECK (cas_hora_salida > cas_hora_entrada),
+    cas_fecha DATE NOT NULL,
+    fk_persona_empleado integer NOT NULL,
+    CONSTRAINT control_asistencia_pkey PRIMARY KEY (cas_id),
+    CONSTRAINT fk_control_asistencia_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.horario
+(
+    hor_id SERIAL,
+    hor_dia character varying(9) COLLATE pg_catalog."default" NOT NULL CHECK(hor_dia in('Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo')),
+    hor_hora_inicio time without time zone NOT NULL,
+    hor_hora_fin time without time zone NOT NULL CHECK (hor_hora_fin > hor_hora_inicio),
+    CONSTRAINT horario_pkey PRIMARY KEY (hor_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.empleado_horario
+(
+    eh_id SERIAL,
+    per_id integer NOT NULL,
+    hor_id integer NOT NULL,
+    CONSTRAINT empleado_horario_pkey PRIMARY KEY (eh_id),
+    CONSTRAINT fk_emphor_horario FOREIGN KEY (hor_id)
+        REFERENCES public.horario (hor_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_emphor_persona_empleado FOREIGN KEY (per_id)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.rol
+(
+    rol_clave SERIAL,
+    rol_nombre character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    rol_descripcion character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT rol_pkey PRIMARY KEY (rol_clave)
+)
+
+CREATE TABLE IF NOT EXISTS public.funcion
+(
+    fun_id SERIAL,
+    fun_tipo character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    fun_descripcion character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT funcion_pkey PRIMARY KEY (fun_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.rol_funcion
+(
+    rf_id SERIAL,
+    rol_clave integer NOT NULL,
+    fun_id integer NOT NULL,
+    CONSTRAINT rol_funcion_pkey PRIMARY KEY (rf_id),
+    CONSTRAINT fk_rolfun_funcion FOREIGN KEY (fun_id)
+        REFERENCES public.funcion (fun_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_rolfun_rol FOREIGN KEY (rol_clave)
+        REFERENCES public.rol (rol_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.usuario
+(
+    usu_id SERIAL,
+    usu_username character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    usu_contrasena character varying(14) COLLATE pg_catalog."default" NOT NULL,
+    fk_rol integer,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT usuario_pkey PRIMARY KEY (usu_id),
+    CONSTRAINT usuario_usu_contrasena_key UNIQUE (usu_contrasena),
+    CONSTRAINT usuario_usu_username_key UNIQUE (usu_username),
+    CONSTRAINT fk_usuario_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_usuario_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_usuario_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_usuario_rol FOREIGN KEY (fk_rol)
+        REFERENCES public.rol (rol_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.pedido
+(
+    ped_numero_compra SERIAL,
+    ped_fecha date NOT NULL,
+    ped_total numeric(100,2) NOT NULL,
+    ped_iva numeric(20,2) NOT NULL,
+    fk_tienda integer NOT NULL,
+    fk_usuario integer NOT NULL,
+    CONSTRAINT pedido_pkey PRIMARY KEY (ped_numero_compra),
+    CONSTRAINT fk_pedido_tienda FOREIGN KEY (fk_tienda)
+        REFERENCES public.tienda (tie_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedido_usuario FOREIGN KEY (fk_usuario)
+        REFERENCES public.usuario (usu_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.detalle_pedido
+(
+    dp_id SERIAL,
+    ped_numero_compra integer NOT NULL,
+    pt_id integer NOT NULL,
+    dp_cantidad numeric(10) NOT NULL CHECK(dp_cantidad > 0),
+    dp_precio numeric(10,2) NOT NULL,
+    dp_peso_total numeric(3) CHECK(dp_peso_total > 0),
+    CONSTRAINT detalle_pedido_pkey PRIMARY KEY (dp_id),
+    CONSTRAINT fk_detped_pedido FOREIGN KEY (ped_numero_compra)
+        REFERENCES public.pedido (ped_numero_compra) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_detped_productotienda FOREIGN KEY (pt_id)
+        REFERENCES public.producto_tienda (pt_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.punto
+(
+    pun_id SERIAL,
+    pun_acumulados numeric(8) NOT NULL,
+    pun_obtenido numeric(8) NOT NULL,
+    fk_pedido integer NOT NULL,
+    fk_usuario integer NOT NULL,
+    CONSTRAINT punto_pkey PRIMARY KEY (pun_id),
+    CONSTRAINT fk_punto_pedido FOREIGN KEY (fk_pedido)
+        REFERENCES public.pedido (ped_numero_compra) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_punto_usuario FOREIGN KEY (fk_usuario)
+        REFERENCES public.usuario (usu_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.banco
+(
+    ban_id SERIAL,
+    ban_nombre character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT banco_pkey PRIMARY KEY (ban_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_efectivo
+(
+    mpa_id SERIAL,
+    mpae_denominacion character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_efectivo_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT fk_mpefectivo_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpefectivo_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpefectivo_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_tarjeta_debito
+(
+    mpa_id SERIAL,
+    mpatd_tipo_cuenta boolean NOT NULL, --False = Cuenta Corriente, True = Cuenta de Ahorro
+    mpatd_nro_cuenta character varying(24) COLLATE pg_catalog."default" NOT NULL,
+    mpatd_clave numeric(6) NOT NULL,
+    fk_banco integer NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_tarjeta_debito_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT metodo_de_pago_tarjeta_debito_mpatd_nro_cuenta_key UNIQUE (mpatd_nro_cuenta),
+    CONSTRAINT fk_banco_tarjdeb FOREIGN KEY (fk_banco)
+        REFERENCES public.banco (ban_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mptarjdeb_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mptarjdeb_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mptarjdeb_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_tarjeta_credito
+(
+    mpa_id SERIAL,
+    mpatc_nro_tarjeta character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    mpatc_fecha_vencimiento date NOT NULL,
+    mpatc_cvv numeric(3) NOT NULL,
+    mpatc_tipo character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    fk_banco integer NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_tarjeta_credito_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT metodo_de_pago_tarjeta_credito_mpatc_nro_tarjeta_key UNIQUE (mpatc_nro_tarjeta),
+    CONSTRAINT fk_banco_tarjcred FOREIGN KEY (fk_banco)
+        REFERENCES public.banco (ban_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mptarjcre_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mptarjcre_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mptarjcre_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_pago_movil
+(
+    mpa_id SERIAL,
+    mpapm_nro_telf character varying(11) COLLATE pg_catalog."default" NOT NULL,
+    fk_banco integer NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_pago_movil_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT metodo_de_pago_pago_movil_mpapm_nro_telf_key UNIQUE (mpapm_nro_telf),
+    CONSTRAINT fk_banco_pagomov FOREIGN KEY (fk_banco)
+        REFERENCES public.banco (ban_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mppagomov_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mppagomov_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mppagomov_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_zelle
+(
+    mpa_id SERIAL,
+    mpaz_correo character varying(70) COLLATE pg_catalog."default" NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_zelle_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT metodo_de_pago_zelle_mpaz_correo_key UNIQUE (mpaz_correo),
+    CONSTRAINT fk_mpzelle_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpzelle_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpzelle_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_paypal
+(
+    mpa_id SERIAL,
+    mpapp_nro_cuenta character varying(24) COLLATE pg_catalog."default" NOT NULL,
+    mpapp_correo character varying(70) COLLATE pg_catalog."default" NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_paypal_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT metodo_de_pago_paypal_mpapp_correo_key UNIQUE (mpapp_correo),
+    CONSTRAINT metodo_de_pago_paypal_mpapp_nro_cuenta_key UNIQUE (mpapp_nro_cuenta),
+    CONSTRAINT fk_mppaypal_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mppaypal_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mppaypal_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_zinli
+(
+    mpa_id SERIAL,
+    mpazi_correo character varying(70) COLLATE pg_catalog."default" NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_zinli_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT metodo_de_pago_zinli_mpazi_correo_key UNIQUE (mpazi_correo),
+    CONSTRAINT fk_mpzinli_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpzinli_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpzinli_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_cheque
+(
+    mpa_id SERIAL,
+    mpach_numero numeric(20) NOT NULL,
+    mpach_nrocuenta numeric(24) NOT NULL,
+    fk_banco integer NOT NULL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_cheque_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT metodo_de_pago_cheque_mpach_numero_key UNIQUE (mpach_numero),
+    CONSTRAINT fk_banco_cheque FOREIGN KEY (fk_banco)
+        REFERENCES public.banco (ban_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpcheque_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpcheque_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mpcheque_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.metodo_de_pago_canje_punto
+(
+    mpa_id SERIAL,
+    fk_persona_natural integer,
+    fk_persona_juridica integer,
+    fk_persona_empleado integer,
+    CONSTRAINT metodo_de_pago_canje_punto_pkey PRIMARY KEY (mpa_id),
+    CONSTRAINT fk_mppunto_persona_empleado FOREIGN KEY (fk_persona_empleado)
+        REFERENCES public.persona_empleado (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mppunto_persona_juridica FOREIGN KEY (fk_persona_juridica)
+        REFERENCES public.persona_persona_juridica (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_mppunto_persona_natural FOREIGN KEY (fk_persona_natural)
+        REFERENCES public.persona_persona_natural (per_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.valor
+(
+    val_id SERIAL,
+    val_precio numeric(10) NOT NULL,
+    val_fecha_hora_inicio timestamp without time zone NOT NULL,
+    val_fecha_hora_fin timestamp without time zone CHECK(val_fecha_hora_fin > val_fecha_hora_inicio),
+    fk_metpago_canje_punto integer NOT NULL,
+    CONSTRAINT valor_pkey PRIMARY KEY (val_id),
+    CONSTRAINT fk_valor_mp_canje_punto FOREIGN KEY (fk_metpago_canje_punto)
+        REFERENCES public.metodo_de_pago_canje_punto (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.pedido_met_pago
+(
+    pm_id SERIAL,
+    ped_numero_compra integer NOT NULL,
+    pm_monto numeric(100,2) NOT NULL,
+    mpa_id_efectivo integer,
+    mpa_id_tar_deb integer,
+    mpa_id_tar_cred integer,
+    mpa_id_pago_movil integer,
+    mpa_id_zelle integer,
+    mpa_id_paypal integer,
+    mpa_id_zinli integer,
+    mpa_id_cheque integer,
+    mpa_id_canje_punto integer,
+    CONSTRAINT pedido_met_pago_pkey PRIMARY KEY (pm_id),
+    CONSTRAINT pedido_met_pago_mpa_id_canje_punto_key UNIQUE (mpa_id_canje_punto),
+    CONSTRAINT pedido_met_pago_mpa_id_cheque_key UNIQUE (mpa_id_cheque),
+    CONSTRAINT pedido_met_pago_mpa_id_efectivo_key UNIQUE (mpa_id_efectivo),
+    CONSTRAINT pedido_met_pago_mpa_id_pago_movil_key UNIQUE (mpa_id_pago_movil),
+    CONSTRAINT pedido_met_pago_mpa_id_paypal_key UNIQUE (mpa_id_paypal),
+    CONSTRAINT pedido_met_pago_mpa_id_tar_cred_key UNIQUE (mpa_id_tar_cred),
+    CONSTRAINT pedido_met_pago_mpa_id_tar_deb_key UNIQUE (mpa_id_tar_deb),
+    CONSTRAINT pedido_met_pago_mpa_id_zelle_key UNIQUE (mpa_id_zelle),
+    CONSTRAINT pedido_met_pago_mpa_id_zinli_key UNIQUE (mpa_id_zinli),
+    CONSTRAINT fk_pedmp_mpa_id_canje_punto FOREIGN KEY (mpa_id_canje_punto)
+        REFERENCES public.metodo_de_pago_canje_punto (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_cheque FOREIGN KEY (mpa_id_cheque)
+        REFERENCES public.metodo_de_pago_cheque (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_efectivo FOREIGN KEY (mpa_id_efectivo)
+        REFERENCES public.metodo_de_pago_efectivo (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_pago_movil FOREIGN KEY (mpa_id_pago_movil)
+        REFERENCES public.metodo_de_pago_pago_movil (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_paypal FOREIGN KEY (mpa_id_paypal)
+        REFERENCES public.metodo_de_pago_paypal (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_tdc FOREIGN KEY (mpa_id_tar_cred)
+        REFERENCES public.metodo_de_pago_tarjeta_credito (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_tdd FOREIGN KEY (mpa_id_tar_deb)
+        REFERENCES public.metodo_de_pago_tarjeta_debito (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_zelle FOREIGN KEY (mpa_id_zelle)
+        REFERENCES public.metodo_de_pago_zelle (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_mpa_id_zinli FOREIGN KEY (mpa_id_zinli)
+        REFERENCES public.metodo_de_pago_zinli (mpa_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedmp_ped_numero_compra FOREIGN KEY (ped_numero_compra)
+        REFERENCES public.pedido (ped_numero_compra) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+
+CREATE TABLE IF NOT EXISTS public.estatus
+(
+    est_clave SERIAL,
+    est_tipo character varying(20) COLLATE pg_catalog."default" NOT NULL CHECK(est_tipo in('Presupuesto','Pagado','Listo para entregar','Entregado')),
+    CONSTRAINT estatus_pkey PRIMARY KEY (est_clave),
+    CONSTRAINT estatus_est_tipo_key UNIQUE (est_tipo)
+) 
+
+CREATE TABLE IF NOT EXISTS public.rep_inv_estatus
+(
+    re_id SERIAL,
+    rin_id integer NOT NULL,
+    est_clave integer NOT NULL,
+    re_fecha_hora_inicio timestamp without time zone NOT NULL,
+    re_fecha_hora_fin timestamp without time zone CHECK(re_fecha_hora_fin > re_fecha_hora_inicio),
+    CONSTRAINT rep_inv_estatus_pkey PRIMARY KEY (re_id),
+    CONSTRAINT fk_repinv_estatus_estatus FOREIGN KEY (est_clave)
+        REFERENCES public.estatus (est_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_repinv_estatus_reposicion_inventario FOREIGN KEY (rin_id)
+        REFERENCES public.reposicion_inventario (rin_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.pedido_estatus
+(
+    pe_id SERIAL,
+    ped_numero_compra integer NOT NULL,
+    est_clave integer NOT NULL,
+    pe_fecha_hora_inicio timestamp without time zone NOT NULL,
+    pe_fecha_hora_fin timestamp without time zone CHECK(pe_fecha_hora_fin > pe_fecha_hora_inicio),
+    CONSTRAINT pedido_estatus_pkey PRIMARY KEY (pe_id),
+    CONSTRAINT fk_pedest_estatus FOREIGN KEY (est_clave)
+        REFERENCES public.estatus (est_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_pedest_pedido FOREIGN KEY (ped_numero_compra)
+        REFERENCES public.pedido (ped_numero_compra) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.almacen
+(
+    alm_id SERIAL,
+    alm_nombre character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    alm_tipo character varying(8) COLLATE pg_catalog."default" NOT NULL CHECK(alm_tipo in ('Almacen','Pasillo','Zona')),
+    fk_almacen SERIAL,
+    CONSTRAINT almacen_pkey PRIMARY KEY (alm_id),
+    CONSTRAINT fk_almacen_almacen FOREIGN KEY (fk_almacen)
+        REFERENCES public.almacen (alm_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.inventario
+(
+    inv_id SERIAL,
+    alm_id integer NOT NULL,
+    pt_id integer NOT NULL,
+    inv_cantidad numeric(100) NOT NULL,
+    CONSTRAINT inventario_pkey PRIMARY KEY (inv_id),
+    CONSTRAINT fk_inventario_almacen FOREIGN KEY (alm_id)
+        REFERENCES public.almacen (alm_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_inventario_producto_tienda FOREIGN KEY (pt_id)
+        REFERENCES public.producto_tienda (pt_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.orden_reposicioni
+(
+    ore_id SERIAL,
+    ore_nombre character varying(25) COLLATE pg_catalog."default" NOT NULL,
+    ore_descripcion character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    alm_id_pide integer NOT NULL,
+    alm_id_recibe integer NOT NULL,
+    CONSTRAINT orden_reposicioni_pkey PRIMARY KEY (ore_id),
+    CONSTRAINT fk_ordrepi_almacen_pide FOREIGN KEY (alm_id_pide)
+        REFERENCES public.almacen (alm_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_ordrepi_almacen_recibe FOREIGN KEY (alm_id_recibe)
+        REFERENCES public.almacen (alm_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.detalle_interno
+(
+    di_id SERIAL,
+    di_cantidad numeric(100) NOT NULL,
+    ore_id integer NOT NULL,
+    fk_producto_tienda integer NOT NULL,
+    CONSTRAINT detalle_interno_pkey PRIMARY KEY (di_id),
+    CONSTRAINT detalle_interno_ore_id_key UNIQUE (ore_id),
+    CONSTRAINT fk_det_int_ordrep FOREIGN KEY (ore_id)
+        REFERENCES public.orden_reposicioni (ore_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_detalleint_productotienda FOREIGN KEY (fk_producto_tienda)
+        REFERENCES public.producto_tienda (pt_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+CREATE TABLE IF NOT EXISTS public.ord_rep_estatus
+(
+    oe_id SERIAL,
+    ore_id integer NOT NULL,
+    est_clave integer NOT NULL,
+    oe_fecha_hora_inicio timestamp without time zone NOT NULL,
+    oe_fecha_hora_fin timestamp without time zone CHECK(oe_fecha_hora_fin > oe_fecha_hora_inicio),
+    CONSTRAINT ord_rep_estatus_pkey PRIMARY KEY (oe_id),
+    CONSTRAINT fk_ordrep_estatus_estatus FOREIGN KEY (est_clave)
+        REFERENCES public.estatus (est_clave) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_ordrep_estatus_orden_reposicioni FOREIGN KEY (ore_id)
+        REFERENCES public.orden_reposicioni (ore_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+

@@ -1,0 +1,1191 @@
+INSERT INTO public.revista(
+	rev_fecha_publi, rev_fecha_fin)
+	VALUES ('20/07/2022', '10/08/2022'); // CAMBIAR POR UNA FUNCIO
+    
+    
+INSERT INTO public.metodo_de_pago_canje_punto(
+	fk_persona_natural, fk_persona_juridica, fk_persona_empleado)
+	VALUES (null,null,null);
+    
+--LUGAR
+
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Distrito Capital','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Zulia','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Amazonas','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Anzoategui','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Apure','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Aragua','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Barinas','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Bolivar','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Carabobo','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Cojedes','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Delta Amacuro','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Dep. Federales','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Falcon','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Guarico','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Lara','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Merida','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Miranda','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Monagas','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Nueva Esparta','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Portuguesa','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Sucre','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Tachira','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Trujillo','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Vargas','Estado');
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Yaracuy','Estado');
+    
+--TIENDA
+
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal El Cafetal ',true, (Select lug_id from lugar where lug_nombre LIKE '%Distrito Capital%'));
+
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Maracaibo ',true, (Select lug_id from lugar where lug_nombre LIKE '%Zulia%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Barquisimeto',true, (Select lug_id from lugar where lug_nombre LIKE '%Lara%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal El Tigre',true, (Select lug_id from lugar where lug_nombre LIKE '%Anzoategui%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Guanare',true, (Select lug_id from lugar where lug_nombre LIKE '%Portuguesa%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Paraguana',true, (Select lug_id from lugar where lug_nombre LIKE '%Falcon%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Valle la Pascua',true, (Select lug_id from lugar where lug_nombre LIKE '%Guarico%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Ureña',true, (Select lug_id from lugar where lug_nombre LIKE '%Tachira%'));   
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal San Felix',true, (Select lug_id from lugar where lug_nombre LIKE '%Bolivar%'));  
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Carora',true, (Select lug_id from lugar where lug_nombre LIKE '%Lara%'));   
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Acarigua',true, (Select lug_id from lugar where lug_nombre LIKE '%Portuguesa%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Tariba',true, (Select lug_id from lugar where lug_nombre LIKE '%Tachira%')); 
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Petare',true, (Select lug_id from lugar where lug_nombre LIKE '%Miranda%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Maracay',true, (Select lug_id from lugar where lug_nombre LIKE '%Aragua%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Puerto Ordaz',true, (Select lug_id from lugar where lug_nombre LIKE '%Bolivar%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal San Cristobal',true, (Select lug_id from lugar where lug_nombre LIKE '%Tachira%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Los Teques',true, (Select lug_id from lugar where lug_nombre LIKE '%Miranda%')); 
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Anaco',true, (Select lug_id from lugar where lug_nombre LIKE '%Anzoategui%'));     
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal San Casimiro',true, (Select lug_id from lugar where lug_nombre LIKE '%Aragua%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal San Antonio de los Altos',true, (Select lug_id from lugar where lug_nombre LIKE '%Miranda%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Antimano',true, (Select lug_id from lugar where lug_nombre LIKE '%Distrito Capital%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal La Guaira',true, (Select lug_id from lugar where lug_nombre LIKE '%Vargas%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Margarita',true, (Select lug_id from lugar where lug_nombre LIKE '%Nueva Esparta%'));
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Puerto La Cruz',true, (Select lug_id from lugar where lug_nombre LIKE '%Anzoategui%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Merida',true, (Select lug_id from lugar where lug_nombre LIKE '%Merida%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Barinas',true, (Select lug_id from lugar where lug_nombre LIKE '%Barinas%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Tucacas',true, (Select lug_id from lugar where lug_nombre LIKE '%Falcon%'));    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Costa Oriental del Lago',true, (Select lug_id from lugar where lug_nombre LIKE '%Zulia%'));     
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal La Victoria',true, (Select lug_id from lugar where lug_nombre LIKE '%Aragua%'));     
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Villa de Cura',true, (Select lug_id from lugar where lug_nombre LIKE '%Aragua%')); 
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Ciudad Ojeda',true, (Select lug_id from lugar where lug_nombre LIKE '%Zulia%'));    
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Ciudad Bolivar',true, (Select lug_id from lugar where lug_nombre LIKE '%Bolivar%'));    
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Barcelona',true, (Select lug_id from lugar where lug_nombre LIKE '%Anzoategui%'));    
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal San Fernando de Apure',true, (Select lug_id from lugar where lug_nombre LIKE '%Apure%'));     
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Valencia',true, (Select lug_id from lugar where lug_nombre LIKE '%Carabobo%'));     
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Maiquetia',true, (Select lug_id from lugar where lug_nombre LIKE '%Vargas%'));     
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Carupano',true, (Select lug_id from lugar where lug_nombre LIKE '%Sucre%'));      
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Coro',true, (Select lug_id from lugar where lug_nombre LIKE '%Falcon%'));      
+ INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sucursal Trujillo',true, (Select lug_id from lugar where lug_nombre LIKE '%Trujillo%'));
+
+-- FORMA
+
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Cuadrada',null);
+    
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Ovalo',null);
+    
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Estrella',null);
+    
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Circular',null);
+    
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Corazon',null);
+    
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Palito',null);
+    
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Bola',null);
+    
+INSERT INTO public.forma(
+	for_tipo, for_descripcion)
+	VALUES ('Abstracta',null);
+
+
+-- TIPO
+
+INSERT INTO public.tipo(
+	tip_nombre, tip_descripcion)
+	VALUES ('Caramelo',null);
+    
+INSERT INTO public.tipo(
+	tip_nombre, tip_descripcion)
+	VALUES ('Chicle',null);
+    
+INSERT INTO public.tipo(
+	tip_nombre, tip_descripcion)
+	VALUES ('Sin Azucar',null);
+    
+INSERT INTO public.tipo(
+	tip_nombre, tip_descripcion)
+	VALUES ('Balsamico',null);    
+        
+-- SABOR
+
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Chocolate', null);
+
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Cola', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Mentolado', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Citrico', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Fresa', null);
+
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Limon', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Menta', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Picante', null);
+   
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Eucalipto', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Miel', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Naranja', null);
+   
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Piña', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Cereza', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Cafe con Leche', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Cafe Expresso', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Cafe con Arequipe', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Manzana', null);
+    
+INSERT INTO public.sabor(
+	sab_tipo, sab_descripcion)
+	VALUES ('Melocoton', null);
+    
+-- COLOR
+
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Rojo',null);
+    
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Verde',null);
+    
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Amarillo',null);
+    
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Rosa',null);
+    
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Morado',null);
+
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Blanco',null);
+
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Naranja',null);
+    
+INSERT INTO public.color(
+	col_tipo, col_descripcion)
+	VALUES ('Marron',null);
+
+-- PRODUCTO
+
+------------------------------------ CHUPETAS RIMBOMBIM------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Chupetas Rimbombin','El famoso caramelo con
+                                  palo ideado por Enric Bernat en 1958 sigue de actualidad en nuestros 
+                                  días. Personajes como Johan Cruyff, Rivaldo, Harrison Ford o Jorge 
+                                  Lorenzo han protagonizado campañas o se les ha visto en público 
+                                  saboreando Chupetas Rimbombin. El logo de Chupetas Rimbombin que
+                                  conocemos hoy en día fue rediseñado por Salvador Paluiski en 1980, 
+                                  envolviéndolo con la forma de margarita que conocemos.Hoy en día, 
+                                  además de los clásicos, también podemos encontrarlos rellenos de 
+                                  chicle, de chocolate y en formato sin azúcar.', 
+            7, 
+            1, 
+            'Version sin Azucar',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Estrella%'));
+    
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Chocolate%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Chupetas Rimbombin%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rojo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Chupetas Rimbombin%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Chupetas Rimbombin','El famoso caramelo con
+                                  palo ideado por Enric Bernat en 1958 sigue de actualidad en nuestros 
+                                  días. Personajes como Johan Cruyff, Rivaldo, Harrison Ford o Jorge 
+                                  Lorenzo han protagonizado campañas o se les ha visto en público 
+                                  saboreando Chupetas Rimbombin. El logo de Chupetas Rimbombin que
+                                  conocemos hoy en día fue rediseñado por Salvador Paluiski en 1980, 
+                                  envolviéndolo con la forma de margarita que conocemos.Hoy en día, 
+                                  además de los clásicos, también podemos encontrarlos rellenos de 
+                                  chicle, de chocolate y en formato sin azúcar.', 
+            7, 
+            2, 
+            'Version sin Azucar',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+            (select for_id from forma where for_tipo LIKE '%Estrella%'));
+    
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Chocolate%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Chupetas Rimbombin%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Amarillo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Chupetas Rimbombin%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+-------------------------------------------------------------------------------------------------------
+
+------------------------------------------ RICOLIN ----------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Ricolin',' Los primeros Ricolin se fabricaron
+                        en la década de 1990, como supresores de la
+                        tos. Hoy en día Ricolin es la marca líder
+                        en el segmento de los caramelos de bolsillo
+                        en Venezuela.', 
+            3, 
+            4, 
+            'Rico en Vitamina C',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Circular%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Mentolado%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Verde%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------------------------------------------------------------------                                                                           
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Ricolin',' Los primeros Ricolin se fabricaron
+                        en la década de 1990, como supresores de la
+                        tos. Hoy en día Ricolin es la marca líder
+                        en el segmento de los caramelos de bolsillo
+                        en Venezuela.', 
+            5, 
+            2, 
+            'Rico en Vitamina C',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Circular%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Citrico%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Blanco%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Ricolin',' Los primeros Ricolin se fabricaron
+                        en la década de 1990, como supresores de la
+                        tos. Hoy en día Ricolin es la marca líder
+                        en el segmento de los caramelos de bolsillo
+                        en Venezuela.', 
+            5, 
+            2, 
+            'Rico en Vitamina C',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Circular%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Fresa%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rojo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Ricolin',' Los primeros Ricolin se fabricaron
+                        en la década de 1990, como supresores de la
+                        tos. Hoy en día Ricolin es la marca líder
+                        en el segmento de los caramelos de bolsillo
+                        en Venezuela.', 
+            8, 
+            3, 
+            'Rico en Vitamina C',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Circular%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Limon%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Verde%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Ricolin%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------------------------------------------------------------------
+-------------------------------------- Firi Firi--------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Los Firi Firi','   Se introducen en el mercado en 1994, teniendo
+                                como objetivo un público adulto. Son pastillas que
+                                proporcionan frescura, y en ello basan
+                                sus campañas publicitarias. Desde el
+                                año 1994 hasta hoy hemos visto
+                                cantidad de campañas divertidas de
+                                firi firi siempre basadas en su slogan
+                                “sin firi firi no hay beso”. A partir
+                                de los primeros firi firi tabs de
+                                sabor menta, han ido apareciendo
+                                nuevos sabores,todos sin azúcar.', 
+            1, 
+            2, 
+            'Sin Azucar',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Ovalo%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Menta%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Los Firi Firi%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Verde%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Los Firi Firi%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));  
+--------------------------------------------------------------------------------------------------------                                                                              
+--------------------------------------Chupetas de Corazón--------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Chupetas de Corazón',' En el año 2005 decidimos
+                                    apostar; gracias al éxito del caramelo
+                                    Ricura; a la combinación del dulce y picante,
+                                    por eso se crean unas chupetas en forma de
+                                    corazón que tienen aspecto sutil pero es el resultado 
+                                    de combinar un suave sabor de fresa con polvo
+                                    efervescente picante.', 
+            5, 
+            3, 
+            'Sin Azucar',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Corazon%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Picante%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Chupetas de Corazón%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rojo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Chupetas de Corazón%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));                                                                             
+--------------------------------------------------------------------------------------------------------
+-------------------------------------- Los Pirulitos ---------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Los Pirulitos','   Son caramelos blandos que
+                                reciben su nombre por la forma alargada
+                                con la que se presentan. Tradicionalmente
+                                eran de sabor fresa, a los que más tarde
+                                se añadieron el sabor naranja y el cola, a
+                                los que ahora se añaden los de melocotón,
+                                patilla y manzana.', 
+            5, 
+            3, 
+            'Blandos para los dientes',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Palito%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Manzana%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Los Pirulitos%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rojo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Los Pirulitos%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));                                                                             
+--------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Los Pirulitos','   Son caramelos blandos que
+                                reciben su nombre por la forma alargada
+                                con la que se presentan. Tradicionalmente
+                                eran de sabor fresa, a los que más tarde
+                                se añadieron el sabor naranja y el cola, a
+                                los que ahora se añaden los de melocotón,
+                                patilla y manzana.', 
+            5, 
+            3, 
+            'Blandos para los dientes',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Palito%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Cola%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Los Pirulitos%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rosa%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Los Pirulitos%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Los Pirulitos','   Son caramelos blandos que
+                                reciben su nombre por la forma alargada
+                                con la que se presentan. Tradicionalmente
+                                eran de sabor fresa, a los que más tarde
+                                se añadieron el sabor naranja y el cola, a
+                                los que ahora se añaden los de melocotón,
+                                patilla y manzana.', 
+            5, 
+            3, 
+            'Blandos para los dientes',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Palito%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Melocoton%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Los Pirulitos%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Amarillo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Los Pirulitos%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));  
+--------------------------------------------RICURA------------------------------------------------------                                                                              
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Ricura','  Se introducen en el mercado en el año 2002 como una
+                        edición especial, por su particular
+                        combinación de sabores, tanto fue el éxito
+                        que son parte de la producción actual de la
+                        fábrica. Es una bola de caramelo picante con
+                        centro de chicle. Permanece dentro del Top 10
+                        a nivel nacional y está entre los favoritos a
+                        nivel internacional.', 
+            4, 
+            5, 
+            'Para el Estres',
+            (select tip_id from tipo where tip_nombre LIKE '%Chicle%' ),
+             (select for_id from forma where for_tipo LIKE '%Bola%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Picante%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Ricura%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rojo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Ricura%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------RICURA------------------------------------------------------                                                                              
+--------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Ricura','  Se introducen en el mercado en el año 2002 como una
+                        edición especial, por su particular
+                        combinación de sabores, tanto fue el éxito
+                        que son parte de la producción actual de la
+                        fábrica. Es una bola de caramelo picante con
+                        centro de chicle. Permanece dentro del Top 10
+                        a nivel nacional y está entre los favoritos a
+                        nivel internacional.', 
+            4, 
+            5, 
+            'Para el Estres',
+            (select tip_id from tipo where tip_nombre LIKE '%Chicle%' ),
+             (select for_id from forma where for_tipo LIKE '%Bola%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Picante%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Ricura%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rojo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Ricura%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------EL ORIGINAL------------------------------------------------------                                                                              
+
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('El Original',' El caramelo balsámico de Sweet UCAB. Un producto
+                            clásico de confitería adulta, que aúna un sabor refrescante y
+                            agradable con el efecto de
+                            aliviar la irritación de
+                            garganta y despejar las vías
+                            respiratorias. Sweet UCAB los
+                            comercializa con y sin azúcar.
+                            Elaborados a partir de Menta
+                            Piperita, la variedad de menta
+                            más refrescante, están
+                            disponibles en varios sabores:
+                            menta fresca, eucalipto, miel y mentol, limón y melisa,
+                            naranja y limón fresh con xylitol.', 
+            19, 
+            6, 
+            'Aliviar la irritación degarganta y despejar las vías
+             respiratorias',
+            (select tip_id from tipo where tip_nombre LIKE '%Balsamico%' ),
+             (select for_id from forma where for_tipo LIKE '%Abstracta%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Eucalipto%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Verde%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));                                                                                
+-------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('El Original',' El caramelo balsámico de Sweet UCAB. Un producto
+                            clásico de confitería adulta, que aúna un sabor refrescante y
+                            agradable con el efecto de
+                            aliviar la irritación de
+                            garganta y despejar las vías
+                            respiratorias. Sweet UCAB los
+                            comercializa con y sin azúcar.
+                            Elaborados a partir de Menta
+                            Piperita, la variedad de menta
+                            más refrescante, están
+                            disponibles en varios sabores:
+                            menta fresca, eucalipto, miel y mentol, limón y melisa,
+                            naranja y limón fresh con xylitol.', 
+            19, 
+            6, 
+            'Aliviar la irritación degarganta y despejar las vías
+             respiratorias',
+            (select tip_id from tipo where tip_nombre LIKE '%Balsamico%' ),
+             (select for_id from forma where for_tipo LIKE '%Abstracta%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Naranja%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Naranja%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+-------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('El Original',' El caramelo balsámico de Sweet UCAB. Un producto
+                            clásico de confitería adulta, que aúna un sabor refrescante y
+                            agradable con el efecto de
+                            aliviar la irritación de
+                            garganta y despejar las vías
+                            respiratorias. Sweet UCAB los
+                            comercializa con y sin azúcar.
+                            Elaborados a partir de Menta
+                            Piperita, la variedad de menta
+                            más refrescante, están
+                            disponibles en varios sabores:
+                            menta fresca, eucalipto, miel y mentol, limón y melisa,
+                            naranja y limón fresh con xylitol.', 
+            7, 
+            4, 
+            'Aliviar la irritación degarganta y despejar las vías
+             respiratorias',
+            (select tip_id from tipo where tip_nombre LIKE '%Balsamico%' ),
+             (select for_id from forma where for_tipo LIKE '%Abstracta%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Fresa%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Rojo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));                                                                              
+-----------------------------------------------------------------------------------------------------                                                                              
+
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('El Original',' El caramelo balsámico de Sweet UCAB. Un producto
+                            clásico de confitería adulta, que aúna un sabor refrescante y
+                            agradable con el efecto de
+                            aliviar la irritación de
+                            garganta y despejar las vías
+                            respiratorias. Sweet UCAB los
+                            comercializa con y sin azúcar.
+                            Elaborados a partir de Menta
+                            Piperita, la variedad de menta
+                            más refrescante, están
+                            disponibles en varios sabores:
+                            menta fresca, eucalipto, miel y mentol, limón y melisa,
+                            naranja y limón fresh con xylitol.', 
+            7, 
+            4, 
+            'Aliviar la irritación degarganta y despejar las vías
+             respiratorias',
+            (select tip_id from tipo where tip_nombre LIKE '%Balsamico%' ),
+             (select for_id from forma where for_tipo LIKE '%Abstracta%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Limon%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Verde%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%El Original%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+--------------------------------------------DULCIN------------------------------------------------------                                                                              
+
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Dulcin','  La receta original es procedente de España del año
+                        1961, pero Sweet hizo una adaptación de la receta con productos locales (venezolanos) son
+                        los caramelos blandos más conocidos de Sweet UCAB, con los que muchos nos
+                        iniciamos en el mundo de los caramelos. Son caramelos masticables
+                        de forma cuadrada y muy coloridos, asociando cada color a un sabor
+                        correspondiente, siendo estos fresa, piña, limón, naranja y
+                        cereza.', 
+            1, 
+            2, 
+            'Masticable',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Cuadrada%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Piña%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Dulcin%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Amarillo%'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Dulcin%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+                                                                              
+--------------------------------------------CHOCO CANDY------------------------------------------------------                                                                              
+
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Choco Candy',' Los primeros caramelos Choco se
+                            fabricaron en una pequeña confitería de
+                            Valencia en la década de los 80, eran pequeñas
+                            pastillas de café
+                            con leche a las que se les
+                            atribuían efectos positivos para
+                            combatir resfriados. Sweet en el
+                            año 2005 adaptó la receta
+                            agregando un ingrediente especial
+                            (el chocolate). Hoy en día los
+                            caramelos Choco son líderes en
+                            caramelos de chocolate, y cuenta con una amplia variedad de
+                            sabores: tradicional, café expresso, capuccino, fresas con
+                            nata, menta, nata y mousse de limón todos con base de
+                            chocolate', 
+            4, 
+            3, 
+            'Masticable',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Ovalo%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Cafe con Leche%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Choco Candy%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Marron'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Choco Candy%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));                                                                              
+------------------------------------------------------------------------------------------------------------------
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Choco Candy',' Los primeros caramelos Choco se
+                            fabricaron en una pequeña confitería de
+                            Valencia en la década de los 80, eran pequeñas
+                            pastillas de café
+                            con leche a las que se les
+                            atribuían efectos positivos para
+                            combatir resfriados. Sweet en el
+                            año 2005 adaptó la receta
+                            agregando un ingrediente especial
+                            (el chocolate). Hoy en día los
+                            caramelos Choco son líderes en
+                            caramelos de chocolate, y cuenta con una amplia variedad de
+                            sabores: tradicional, café expresso, capuccino, fresas con
+                            nata, menta, nata y mousse de limón todos con base de
+                            chocolate', 
+            4, 
+            3, 
+            'Masticable',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Ovalo%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Cafe Expresso%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Choco Candy%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Marron'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Choco Candy%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto))); 
+                                                                              
+--------------------------------------------BLUE------------------------------------------------------                                                                              
+
+INSERT INTO public.producto(
+	pro_nombre, pro_historia, pro_precio_actual, pro_peso_neto, pro_beneficio, fk_tipo, fk_forma)
+	VALUES ('Blue',        'Al término de la guerra civil, Javier Ramírez regresó
+                            a Navarra tras un exilio en Francia. Fue entonces cuando
+                            inventó un caramelo que hoy día sigue siendo un éxito en
+                            España y en el mundo, el caramelo de piñones de la fábrica El
+                            Caserío. En El Caserío de Tafalla siguen produciendo sus
+                            caramelos de forma casi artesanal, siempre con productos
+                            naturales. Hoy en día su variedad es muy amplia, además del
+                            caramelo de piñones tienen disponibles otros de cremas, pastillas de café con leche, caramelos ligeros, toffers,
+                            caramelos de chocolate con piñones, caramelos de cortesía e
+                            incluso un caramelo especial con el que colaboran en la lucha
+                            contra el Alzheimer. Sweet para el 2007 hizo la
+                            tropicalización de la receta y creó Blue un caramelo de café
+                            con centro de arequipe', 
+            4, 
+            3, 
+            'Compuesto de productos Naturales',
+            (select tip_id from tipo where tip_nombre LIKE '%Caramelo%' ),
+             (select for_id from forma where for_tipo LIKE '%Corazon%'));
+
+INSERT INTO public.sabor_producto(
+	sab_id, pro_clave)
+	VALUES ( (select sab_id from sabor where sab_tipo LIKE '%Cafe con Leche%'),
+           (select pro_clave 
+            from producto 
+            where pro_nombre LIKE '%Blue%' AND pro_clave not in(select pro_clave 
+                                                                              from sabor_producto)));
+
+INSERT INTO public.color_producto(
+	col_id, pro_clave)
+	VALUES ( (select col_id from color where col_tipo LIKE '%Marron'), 
+            (select pro_clave 
+             from producto 
+             where pro_nombre LIKE '%Blue%' AND pro_clave not in(select pro_clave 
+                                                                              from color_producto)));
+
+
+-- REVISTA
+
+
+-- DESCUENTO
+
+
+--Producto-Tienda
+INSERT INTO public.producto_tienda(pro_clave, tie_clave, pt_cantidad) 
+	VALUES ((select pro_clave from producto where pro_nombre='takis' LIMIT 1),
+            (select tie_clave from tienda where tie_nombre LIKE '%Sucursal El Cafetal%'),
+            50);
+
+INSERT INTO public.producto_tienda(pro_clave, tie_clave, pt_cantidad) 
+	VALUES (8, (select tie_clave from tienda where tie_nombre LIKE '%Sucursal El Cafetal%'),
+            79) returning *;
+
+--DEPARTAMENTOS
+
+INSERT INTO public.departamento(
+	dep_nombre)
+	VALUES ('Ventas');
+
+--FUNCIONES
+
+--ESTATUS
+INSERT INTO public.estatus(
+	est_tipo)
+	VALUES ('Presupuesto'),('Pagado'),('Listo para entregar'),('Entregado');
+
+
+-- CREAR UN METODO CANJE PUNTO
+
+--ROLES
+
+INSERT INTO public.rol(
+	rol_nombre, rol_descripcion)
+	VALUES ('Jefe de Pasillos', 'Todo lo relacionado con productos');
+
+--CLIENTES
+
+--CLIENTE EMPLEADO
+INSERT INTO public.persona_empleado(
+	per_rif, emp_cedula, emp_salario, fk_lugar, fk_tienda, fk_departamento)
+	VALUES ('J29874512', 
+            2987451, 
+            895,
+            (Select lug_id from lugar where lug_nombre LIKE '%Distrito Capital%'),
+            (select tie_clave from tienda where tie_nombre LIKE '%Sucursal El Cafetal%'),
+            (select dep_id from departamento where dep_nombre LIKE '%Ventas%'));
+
+--USUARIO
+
+--USUARIO EMPLEADO
+INSERT INTO public.usuario(
+	usu_username, usu_contrasena, fk_rol,fk_persona_empleado)
+	VALUES ('gdpalacios.20', 
+            '123456',
+            (select rol_clave from rol where rol_nombre LIKE '%Jefe de Pasillos%'),
+            (select per_id from persona_empleado where emp_cedula=29874512)
+           );
+
+
+--PEDIDOS 
+INSERT INTO public.pedido(
+	ped_fecha, ped_total, ped_iva, fk_tienda, fk_usuario)
+	VALUES ('20/07/2022',
+            0, 
+            0,
+            (select tie_clave from tienda where tie_nombre LIKE '%Sucursal El Cafetal%'),
+            (select usu_id from usuario where usu_username LIKE 'gdpalacios.20'));
+            
+--PEDIDO-ESTATUS
+INSERT INTO public.pedido_estatus(ped_numero_compra, est_clave, pe_fecha_hora_inicio)
+	VALUES ((select ped_numero_compra FROM pedido WHERE fk_usuario in (select usu_id FROM USUARIO WHERE usu_username LIKE'%gdpalacios.20%')),
+            (select est_clave FROM estatus WHERE est_tipo LIKE '%Presupuesto%'), '20/07/2022');
+
+--DETALLE PEDIDO
+
+INSERT INTO public.detalle_pedido(
+	ped_numero_compra, pt_id, dp_cantidad, dp_precio, dp_peso_total)
+	VALUES ((select ped_numero_compra 
+             FROM pedido 
+             WHERE fk_usuario in (select usu_id FROM USUARIO WHERE usu_username LIKE'%gdpalacios.20%')),
+             (select pt_id 
+              from producto_tienda 
+              where pro_clave in (select pro_clave 
+                                   from producto 
+                                   where pro_nombre LIKE'%takis%')
+              and tie_clave in (select fk_tienda 
+                                FROM pedido 
+                                WHERE fk_usuario in (select usu_id FROM USUARIO WHERE usu_username LIKE'%gdpalacios.20%' ))),
+             4,
+             (select p.pro_precio_actual 
+              FROM producto p
+              WHERE p.pro_nombre LIKE '%takis%'), 
+              NULL) RETURNING *;
+              

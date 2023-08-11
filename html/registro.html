@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registrar Usuario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+    <script src="../js/registro.js"></script>
+    <nav class="navbar has-shadow is-white">
+      <!--logo-->
+    <div class="navbar-brand">
+        <a class="navbar-item">
+            <img src="imagenes/logo.png" alt="logo pag" style="max-height: 60px" class="py-2 px-2">
+        </a>
+    </div>
+
+    <div class="navbar-menu has-background-danger" id="nav-links">
+        <div class="navbar-start">
+            <a class="navbar-item" href="index.html">Inicio</a>
+            <a class="navbar-item" href="novedades.html">Novedades</a>
+            <a class="navbar-item" href="productos.html">Productos</a>
+            <a class="navbar-item" href="sweetFlyer.html">Descuentos</a>
+            <a class="navbar-item" href="contacto.html">Contáctanos</a>
+        </div>
+    </div>
+    <div class="navbar right has-background-danger">
+        <a href="carrito.html" class="navbar-item">
+            <img src="imagenes/carrito.png" alt="carrito">
+        </a>
+        <a href="login.html" class="navbar-item">
+            Iniciar Sesion
+        </a>
+    </div>
+  </nav>
+  <div class="columns is-centered">
+    <div class="column is-4">
+          <br> <br> <br> <br>
+          <p class="title">Registrar Usuario</p>
+          <form method="post">
+            <div class="field">
+                <input type="text" class="input" name="correo" 
+                placeholder="Correo" required>
+            </div>
+            <div class="field">
+                <input type="password" class="input" name="clave"
+                 placeholder="Contraseña" required>
+            </div>
+            <div class="field">
+                <input type="password" class="input" name="confirmar_clave"
+                 placeholder="Confirmar Clave" required>
+            </div>
+            <p class="has-text-centered">
+                <a href="login.html" >
+                    ¿Ya tienes una cuenta? Inicia Sesion
+                </a>
+            </p>
+            <br>
+            <div class="field has-text-centered" >
+                <button class="button is-light">Cancelar</button>
+                <button class="button is-danger">Crear Usuario</button>
+            </div>
+         </form>
+         <p class="has-text-centered">
+        </p>    
+    </div>
+  </div>
+  </body>
+</html>

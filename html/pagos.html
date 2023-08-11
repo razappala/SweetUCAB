@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>Comprar Fisico</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.min.css"> 
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="html2pdf.bundle.min.js"></script>
+</head>
+<script>
+    function SelectChanged(){
+        if(document.aform.metodopago.value=="PUNTO"){
+            document.getElementById('PUNTO').style.display='';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="CASH"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="TDD"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="TDC"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="PM"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="ZELLE"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="PAYPAL"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="ZINLI"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='';
+            document.getElementById('CHEQUE').style.display='none';
+        }
+        if(document.aform.metodopago.value=="CHEQUE"){
+            document.getElementById('PUNTO').style.display='none';
+            document.getElementById('CASH').style.display='none';
+            document.getElementById('TDD').style.display='none';
+            document.getElementById('TDC').style.display='none';
+            document.getElementById('PM').style.display='none';
+            document.getElementById('ZELLE').style.display='none';
+            document.getElementById('PAYPAL').style.display='none';
+            document.getElementById('ZINLI').style.display='none';
+            document.getElementById('CHEQUE').style.display='';
+        }
+    }  
+</script>
+<body>
+
+    <nav class="navbar has-shadow is-white">
+        <!--logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <img src="imagenes/logo.png" alt="logo pag" style="max-height: 60px" class="py-2 px-2">
+            </a>
+        </div>
+
+        <div class="navbar-menu has-background-danger" id="nav-links">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">Inicio</a>
+                <a class="navbar-item" href="novedades.html">Novedades</a>
+                <a class="navbar-item" href="productos.html">Productos</a>
+                <a class="navbar-item" href="sweetFlyer.html">Descuentos</a>
+                <a class="navbar-item" href="contacto.html">Contáctanos</a>
+            </div>
+            <div class="navbar-end has-background-danger">
+                <a href="carrito.html" class="navbar-item">
+                    <img src="imagenes/carrito.png" alt="carrito">
+                </a>
+                <a href="login.html" class="navbar-item">
+                    Iniciar Sesion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="column has-text-centered">
+		<br><br>
+		<h2 class="subtitle is-2 has-text-centered is-italic has-text-weight-bold">Comprar Fisico</h2>
+	</div>
+
+    <div class="container-fluid">
+        <div class="row shadow-lg p-3 mb-5">
+            <div class="col">
+                <table id="tablaCompra" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">NUMERO DE COMPRA</th>
+                        <th class="text-center" >FECHA DE EMISION</th>
+                        <th class="text-center">TIENDA</th>
+                        <th class="text-center">USUARIO</th>
+                        <th class="text-center" >ESTATUS</th>              
+                        <th class="text-center">PRODUCTOS</th>
+                        <th class="text-center">TOTAL ($)</th>  
+                        <th class="text-center">ACCIONES</th>                  
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                </table> 
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para CRUD-->
+    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>                
+                </div>
+                <form id="formCompra">    
+                    <div class="modal-body">                
+                            <input id="id" hidden>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field is-narrow">
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select name="tie_nombre" id="tie_nombre">
+                                                    <option disabled selected>Tienda</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-narrow">
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select name="usu_username" id="usu_username">
+                                                    <option disabled selected>Usuario</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>         
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                    </div>
+                </form>    
+            </div>
+        </div>
+    </div> 
+    
+    <div id="modalCRUD2" class="modal fade" tabindex="-1" role="dialog" style="display: none;"> 
+        <div class="modal-dialog" style="max-width: 1350px!important;" role="document"> 
+            <div class="modal-content"> <div class="modal-body">
+                <div class="field">
+                    <label for="">Numero de Compra: </label>
+                    <input type="text" class="input" name="numerodecompra" id="numerodecompra" placeholder="Puntos del usuario" disabled>
+                </div>
+                <div class="field">
+                    <label for="">Tienda</label>
+                    <input type="text" class="input" name="tienda" id="tienda" placeholder="Puntos del usuario" disabled>
+                </div>  
+                <div class="field">
+                    <label for="">Usuario</label>
+                    <input type="text" class="input" name="usuario" id="usuario" placeholder="Puntos del usuario" disabled>
+                </div> 
+                <table id="tablaProductos" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">NUMERO DE DETALLE</th>
+                            <th class="text-center">CODIGO DEL PRODUCTO</th>
+                            <th class="text-center">PRECIO UNITARIO</th>
+                            <th class="text-center">PRODUCTO</th> 
+                            <th class="text-center">CANTIDAD</th>
+                            <th class="text-center">TOTAL ($)</th>
+                            <th class="text-center">ACCIONES</th>                  
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table> 
+                <br>
+                <div class="field">
+                    <label for="">Total</label>
+                    <input type="text" class="input" name="total" id="total" placeholder="Puntos del usuario" disabled>
+                </div> 
+                <br><br><br>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button id="btnCrearPDF" class="button is-danger is-pulled-center">Generar Factura</button>
+                <button id="btnAgregar" class="button is-danger is-pulled-right">Agregar Producto</button>
+            </div>
+        </div> 
+    </div>
+
+    <div id="modalCRUD3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>                
+                </div>
+                <form id="formProducto">    
+                    <div class="modal-body">                
+                            <input id="id" hidden>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field is-narrow">
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select required="required" name="pro_nombre" id="pro_nombre" >
+                                                    <option disabled selected>Producto</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
+                            
+                            <label for="" class="col-form-label">CANTIDAD</label>
+                            <input id="dp_cantidad" type="number" class="form-control" name="dp_cantidad" required>
+
+                        </div>
+                                 
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                        </div>
+                    </div>
+                </form>    
+            </div>
+        </div>
+    </div> 
+
+
+    <div id="modalPago" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>                
+                </div> 
+                <div class="section">
+                    <div class="columns is-centered">
+                        <div class="column is-7">
+                            <h2 class="title is-2 is-italic">Pago:</h2>
+                            <div class="field">
+                                <label class="label">Metodo de Pago</label>
+                                <div class="control">
+                                  <div class="select">
+                                    <form name="aform">
+                                        <select name="metodopago" id="metodopago" onchange="SelectChanged()">
+                                            <option disabled selected >Seleccione</option>
+                                            <option value="PUNTO" >PUNTOS</option>
+                                            <option value="CASH" >EFECTIVO</option>
+                                            <option value="TDD" >Tarjeta de Debito</option>
+                                            <option value="TDC">Tarjeta de Credito</option>
+                                            <option value="PM">Pago Movil</option>
+                                            <option value="ZELLE">Zelle</option>
+                                            <option value="PAYPAL">PayPal</option>
+                                            <option value="ZINLI">Zinli</option>
+                                            <option value="CHEQUE">Cheque</option>
+                                          </select>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+
+                            <div name="PUNTO" id="PUNTO" style="display:none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formPUNTO">
+                                                    <div class="field-label is-normal">
+                                                        <label class="label">Puntos disponibles</label>
+                                                    </div>
+                                                    <div class="field">
+                                                        <input type="text" class="input" name="pun_total_acumulado1" id="pun_total_acumulado1" placeholder="Puntos del usuario" disabled>
+                                                    </div>
+                                                    <div class="field">
+                                                        <input required type="number" class="input" name="punto_canje" id="punto_canje" placeholder="Cantidad a usar">
+                                                    </div>
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div name="CASH" id="CASH" style="display:none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formCASH">
+                                                    <div class="field">
+                                                        <input required name="mpaE_denominacion" id="mpaE_denominacion" class="input" type="text" placeholder="Denominacion">    
+                                                    </div>
+                                                    <div class="field">
+                                                        <input name="pm_monto1" id="pm_monto1" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div id="TDD" name="TDD" style = " display: none">
+                                <div class="details-content">
+                                            <div class="column is-medium has-text-centered is-grouped">
+                                                <form id="formTDD">
+                                                    <div class="field is-horizontal">
+                                                        <div class="field-label is-normal">
+                                                            <label class="label">Tipo de Cuenta</label>
+                                                        </div>
+                                                    
+                                                        <div class="field-body">
+                                                            <div class="field">
+                                                                <div class="control">
+                                                                    <div class="select">
+                                                                        <select name="mpaTd_tipo_cuenta" id="mpaTd_tipo_cuenta" onchange="SelectChanged()">
+                                                                            <option disabled selected>Tipo de Cuenta</option>
+                                                                            <option value="Ahorro" >Ahorro</option>
+                                                                            <option value="Corriente" >Corriente</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <input  required name="mpatd_nro_cuenta" id="mpatd_nro_cuenta" type="number" class="input" placeholder="Numero de cuenta">
+                                                    </div>
+                                                    <div class="field">
+                                                        <input  required name="mpatd_clave" id="mpatd_clave" type="password" class="input" placeholder="Clave">
+                                                    </div>
+                                                    <div class="field is-horizontal">
+                                                        <div class="field-body">
+                                                            <div class="field is-narrow">
+                                                                <div class="control">
+                                                                    <div class="select is-fullwidth">
+                                                                        <select name="ban_nombre1" id="ban_nombre1">
+                                                                            <option disabled selected>Banco</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <input name="pm_monto2" id="pm_monto2" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                </div>
+                            </div>
+                        
+                            <div name="TDC" id="TDC" style = " display: none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formTDC">
+                                                        <input required name="mpaTc_nro_tarjeta" id="mpaTc_nro_tarjeta" type="number" class="input" placeholder="Numero de Tarjeta">
+                                                    </div>
+                                                    <div class="field">
+                                                        <input required name="mpaTc_fecha_vencimiento" id="mpaTc_fecha_vencimiento" type="date" class="input" placeholder="Fecha de Vencimiento">
+                                                    </div>
+                                                    <div class="field">
+                                                        <input required name="mpaTc_cvv" id="mpaTc_cvv" type="number" class="input" placeholder="Codigo de Seguridad">
+                                                    </div>
+                                                    <div class="field-body">
+                                                        <div class="field">
+                                                            <div class="control">
+                                                                <div class="select">
+                                                                    <select name="mpaTc_tipo" id="mpaTc_tipo" onchange="SelectChanged()">
+                                                                        <option disabled selected>Tipo de Tarjeta</option>
+                                                                        <option value="Visa" >Visa</option>
+                                                                        <option value="Mastercard" >Mastercard</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                        
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="field">
+                                                        <input name="pm_monto3" id="pm_monto3" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    
+                                                    <div class="field is-horizontal">
+                                                        <div class="field-body">
+                                                            <div class="field is-narrow">
+                                                                <div class="control">
+                                                                    <div class="select is-fullwidth">
+                                                                        <select name="ban_nombre2" id="ban_nombre2">
+                                                                            <option disabled selected>Banco</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="PM" name="PM" style="display: none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formPM">
+                                                    <div class="field">
+                                                        <input  required id="mpaPm_numero_telf" name="mpaPm_numero_telf" class="input" type="number" placeholder="Numero de telefono">    
+                                                    </div>
+                                                    <div class="field">
+                                                        <input required name="pm_monto4" id="pm_monto4" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    
+                                                    <div class="field is-horizontal">
+                                                        <div class="field-body">
+                                                            <div class="field is-narrow">
+                                                                <div class="control">
+                                                                    <div class="select is-fullwidth">
+                                                                        <select name="ban_nombre3" id="ban_nombre3">
+                                                                            <option disabled selected>Banco</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="ZELLE" name="ZELLE" style="display: none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formZELLE">
+                                                    <div class="field">
+                                                        <input required name="mpaZ_correo" id="mpaZ_correo" type="input" class="input"  placeholder="Correo electronico" required>    
+                                                    </div>
+                                                    <div class="field">
+                                                        <input required name="pm_monto5" id="pm_monto5" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div name="PAYPAL" id="PAYPAL" style="display: none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formPAYPAL">
+                                                    <div class="field">
+                                                        <input name="mpaPp_correo" id="mpaPp_correo" type="input" class="input"  placeholder="Correo electronico" required>    
+                                                    </div>
+                                                    <div class="field">
+                                                        <input name="mpaPp_nro_cuenta" id="mpaPp_nro_cuenta" type="input" class="input"  placeholder="Numero de Cuenta" required>    
+                                                    </div>
+                                                    <div class="field">
+                                                        <input name="pm_monto6" id="pm_monto6" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div name="ZINLI" id="ZINLI" style="display: none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formZINLI">
+                                                    <div class="field">
+                                                        <input name="mpaZi_correo" id="mpaZi_correo" type="input" class="input"  placeholder="Correo electronico" required>    
+                                                    </div>
+                                                    <div class="field">
+                                                        <input name="pm_monto7" id="pm_monto7" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div NAME="CHEQUE" id="CHEQUE" style="display: none">
+                                <div class="details-content" >
+                                    <div class="columns is-centered">
+                                        <div class="column is-7">
+                                            <div class="content is-medium has-text-centered">
+                                                <form id="formCHEQUE">
+                                                    <div class="field">
+                                                        <input name="mpaCh_numero" type="input" class="input"  placeholder="Numero del Cheque" required>    
+                                                    </div>
+                                                    <div class="field">
+                                                        <input required name="mpaCh_nro_cuenta" id="mpaCh_nro_cuenta" type="number" class="input" placeholder="Numero de cuenta">
+                                                    </div>
+                                                    <div class="field">
+                                                        <input name="pm_monto8" id="pm_monto8" type="number" step="0.01" class="input"  placeholder="MONTO" required>    
+                                                    </div>
+                                                    
+                                                    <div class="field is-horizontal">
+                                                        <div class="field-body">
+                                                            <div class="field is-narrow">
+                                                                <div class="control">
+                                                                    <div class="select is-fullwidth">
+                                                                        <select name="ban_nombre4" id="ban_nombre4">
+                                                                            <option disabled selected>Banco</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="field has-text-centered">
+                                                        <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                                    </div> 
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="label">Total</label>
+                                <input type="text" class="input" name="totalPagar" id="totalPagar" placeholder="Puntos del usuario" disabled>
+                        </div>
+                </div>   
+            </div>
+        </div>
+    </div> 
+    </div>
+
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap5.min.js"></script>        
+<script>
+$(document).ready(function() {   
+
+    let url = 'http://localhost:3000/pedidos/';
+    let opcion = null;
+    let ped_numero_compra, ped_fecha, est_tipo, pe_fecha_hora_inicio, pe_fecha_hora_fin, dp_id, usu_username, tie_nombre, ped_total, estatus, estatus2
+    //MOSTRAR
+    let tablaCompra = $('#tablaCompra').DataTable({            
+        "ajax":{
+            "url": url,
+            "dataSrc":""
+        },
+        "columns":[
+            {"data":"ped_numero_compra"},
+            {"data":"ped_fecha"},
+            {"data":"tie_nombre"},
+            {"data":"usu_username"},
+            {"data":"est_tipo"},
+            {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btn-sm btnProducto'>Productos</button></div></div>"},
+            {"data":"ped_total"},
+            {"defaultContent": "<div class='text-center'><div class='btn-group'></button><button class='btn btn-danger btn-sm btnPagar'>Pagar</button></div></div>"}
+        ],
+        "columnDefs":[{
+            "targets":[2],
+        }]              
+    });
+
+    $("#btnCrear").click(function(){
+        opcion='crear';            
+        id=null;
+        $("#formCompra").trigger("reset");
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Crear Compra");
+        $('#modalCRUD').modal('show');	    
+
+        fetch("http://localhost:3000/tienda")
+            .then((response)=>response.json())
+            .then((tiendas)=>{
+                let listatiendas=document.querySelector("#tie_nombre");
+
+                    for(const itemTienda of tiendas){ 
+                        if((itemTienda.tie_tipo)){
+                            let option="<option value="+itemTienda.tie_clave+">"+itemTienda.tie_nombre+"</option>";
+                            listatiendas.innerHTML+=option;
+                        }
+
+                    }
+        }) 
+
+
+        fetch("http://localhost:3000/usuariosss")
+            .then((response)=>response.json())
+            .then((tiendas)=>{
+                let listausuarios=document.querySelector("#usu_username");
+
+                    for(const itemUsuario of tiendas){ 
+                        let option="<option value="+itemUsuario.usu_id+">"+itemUsuario.usu_username+"</option>";
+
+                        listausuarios.innerHTML+=option;
+                    }
+        }) 
+
+    });
+
+
+
+    //Cambiar estatus      
+    $(document).on("click", ".btnPagar", function(){
+        estatus2= $(this).closest('tr').find('td:eq(4)').text()
+        fila = $(this).closest("tr");	
+        ped_numero_compra = $(this).closest('tr').find('td:eq(0)').text();
+        usu_username= $(this).closest('tr').find('td:eq(3)').text();
+        ped_total= $(this).closest('tr').find('td:eq(6)').text();
+
+        $('#modalPago').modal('show');	
+
+
+        fetch("http://localhost:3000/banco/")
+            .then((response)=>response.json())
+            .then((bancos)=>{
+                let listaBancos=document.querySelector("#ban_nombre1");
+
+                    for(const itemBanco of bancos){ 
+                        let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+
+                        listaBancos.innerHTML+=option;
+                    }
+            })
+
+        fetch("http://localhost:3000/banco/")
+            .then((response)=>response.json())
+            .then((bancos)=>{
+                let listaBancos=document.querySelector("#ban_nombre2");
+
+                    for(const itemBanco of bancos){ 
+                        let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+
+                        listaBancos.innerHTML+=option;
+                    }
+            })
+
+        fetch("http://localhost:3000/banco/")
+            .then((response)=>response.json())
+            .then((bancos)=>{
+                let listaBancos=document.querySelector("#ban_nombre3");
+
+                    for(const itemBanco of bancos){ 
+                        let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+
+                        listaBancos.innerHTML+=option;
+                    }
+            })
+
+        fetch("http://localhost:3000/banco/")
+            .then((response)=>response.json())
+            .then((bancos)=>{
+                let listaBancos=document.querySelector("#ban_nombre4");
+
+                    for(const itemBanco of bancos){ 
+                        let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+
+                        listaBancos.innerHTML+=option;
+                    }
+            })
+        
+        fetch("http://localhost:3000/banco/")
+            .then((response)=>response.json())
+            .then((bancos)=>{
+                let listaBancos=document.querySelector("#ban_nombre4");
+
+                    for(const itemBanco of bancos){ 
+                        let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+
+                        listaBancos.innerHTML+=option;
+                    }
+            })
+
+/*            fetch("http://localhost:3000/punto/"+usu_username)
+            .then((response)=>response.json())
+            .then((punto)=>{
+
+                for(const itempunto of punto){ 
+                        //let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+                        console.log(itempunto.sum)
+                        document.getElementById("pun_total_acumulado1").value = ""+itempunto.sum+"";
+                        //listaBancos.innerHTML+=option;
+                }
+            })
+
+            fetch("http://localhost:3000/punto/"+usu_username)
+            .then((response)=>response.json())
+            .then((punto)=>{
+
+                for(const itempunto of punto){ 
+                        //let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+                        console.log(itempunto.sum)
+                        document.getElementById("pun_total_acumulado1").value = ""+itempunto.sum+"";
+                        //listaBancos.innerHTML+=option;
+                }
+            })*/
+
+
+            fetch("http://localhost:3000/punto2/"+usu_username)
+            .then((response)=>response.json())
+            .then((punto)=>{
+
+                for(const itempunto of punto){ 
+                        //let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+                        //console.log(itempunto.sum)
+                        document.getElementById("pun_total_acumulado1").value = ""+itempunto.dispo+"";
+                        //listaBancos.innerHTML+=option;
+                }
+            })
+
+            fetch("http://localhost:3000/punto2/"+usu_username)
+            .then((response)=>response.json())
+            .then((punto)=>{
+
+                for(const itempunto of punto){ 
+                        //let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+                        console.log(itempunto.sum)
+                        document.getElementById("pun_total_acumulado1").value = ""+itempunto.dispo+"";
+                        //listaBancos.innerHTML+=option;
+                }
+            })
+
+            //console.log(document.getElementById("pun_total_acumulado1").value)
+
+            fetch("http://localhost:3000/totalPagar/"+ped_numero_compra)
+            .then((response)=>response.json())
+            .then((pagar)=>{
+                if(Object.keys(pagar).length>0){
+                    for(const itempagar of pagar){ 
+                        //let option="<option value="+itemBanco.ban_id+">"+itemBanco.ban_nombre+"</option>";
+                        console.log(itempagar.totalpagar)
+                        document.getElementById("totalPagar").value = ""+itempagar.totalpagar+"";
+                        //listaBancos.innerHTML+=option;
+                }
+                }else{
+                    document.getElementById("totalPagar").value = ""+ped_total+"";
+                }
+
+            })
+            
+
+        //window.open('http://127.0.0.1:5500/html/metodo_pago_fisica.html', "_self");
+
+        //abrir html de pagos
+        
+
+        /*fila = $(this).closest("tr");	        
+        ped_numero_compra = $(this).closest('tr').find('td:eq(0)').text();
+        est_tipo = fila.find('td:eq(2)').text();
+
+
+        $("#for_id").val(for_id);
+        $("#for_tipo").val(for_tipo);
+        $("#for_descripcion").val(for_descripcion);
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Cambiar Estatus");
+        if (est_tipo!='Entregado'){
+            $('#modalCRUD').modal('show');	 
+        }*/
+    });
+
+    $('#formPUNTO').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formPUNTO');
+        const form = new FormData(formulario);
+
+        console.log("entre")
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                punto_canje: form.get('punto_canje'),
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('punto_canje'))) <= (parseFloat(document.getElementById("pun_total_acumulado1").value)) ){
+
+                fetch('http://localhost:3000/pagopunto', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+            }
+
+        }
+
+
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+    $('#formCASH').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formCASH');
+        const form = new FormData(formulario);
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto: form.get('pm_monto1'),
+                mpaE_denominacion:form.get('mpaE_denominacion'),
+            }
+
+            console.log(estatus2)    
+
+        if(estatus2!='Pagado'){
+
+            if( (parseFloat(form.get('pm_monto1'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                fetch('http://localhost:3000/pagoefectivo', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                },
+                success: function(data) {                       
+                    tablaFormas.ajax.reload(null, false);                        
+                }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+
+            
+                /*fetch('http://localhost:3000/pagoefectivo2', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })*/
+
+                console.log(parseFloat(form.get('pm_monto1')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto1'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+
+
+        }
+
+            
+
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+
+    $('#formTDD').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formTDD');
+        const form = new FormData(formulario);
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto2: form.get('pm_monto2'),
+                mpaTd_tipo_cuenta: form.get('mpaTd_tipo_cuenta'),
+                mpatd_nro_cuenta: form.get('mpatd_nro_cuenta'),
+                mpatd_clave: form.get('mpatd_clave'),
+                ban_id : formTDD.ban_nombre1.value
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('pm_monto2'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                fetch('http://localhost:3000/pagoedebito', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+
+                
+                /*fetch('http://localhost:3000/pagodebito2', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })*/
+
+                console.log(parseFloat(form.get('pm_monto2')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto2'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+        }
+           		        
+        $('#modalPago').modal('hide');									     			
+    });
+
+    $('#formTDC').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formTDC');
+        const form = new FormData(formulario);
+
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto3: form.get('pm_monto3'),
+                mpaTc_nro_tarjeta: form.get('mpaTc_nro_tarjeta'),
+                mpaTc_fecha_vencimiento: form.get('mpaTc_fecha_vencimiento'),
+                mpaTc_cvv: form.get('mpaTc_cvv'),
+                mpaTc_tipo: form.get('mpaTc_tipo'),
+                ban_id : formTDC.ban_nombre2.value
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('pm_monto3'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                fetch('http://localhost:3000/pagocredito', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+
+                
+                /*fetch('http://localhost:3000/pagocredito2', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })*/
+
+                console.log(parseFloat(form.get('pm_monto3')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto3'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+        }
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+    $('#formPM').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formPM');
+        const form = new FormData(formulario);
+
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto4: form.get('pm_monto4'),
+                mpaPm_numero_telf: form.get('mpaPm_numero_telf'),
+                ban_id : formPM.ban_nombre3.value
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('pm_monto4'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                fetch('http://localhost:3000/pagoMovil', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+
+
+
+                console.log(parseFloat(form.get('pm_monto4')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto4'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+        }
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+
+    $('#formZELLE').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formZELLE');
+        const form = new FormData(formulario);
+
+
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto5: form.get('pm_monto5'),
+                mpaZ_correo: form.get('mpaZ_correo'),
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('pm_monto5'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                fetch('http://localhost:3000/pagZelle', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+
+                console.log(parseFloat(form.get('pm_monto5')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto5'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+        }
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+    $('#formPAYPAL').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formPAYPAL');
+        const form = new FormData(formulario);
+
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto6: form.get('pm_monto6'),
+                mpaPp_nro_cuenta: form.get('mpaPp_nro_cuenta'),
+                mpaPp_correo: form.get('mpaPp_correo'),
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('pm_monto6'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                fetch('http://localhost:3000/pagPaypal', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+
+                console.log(parseFloat(form.get('pm_monto6')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto6'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+        }
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+    $('#formZINLI').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formZINLI');
+        const form = new FormData(formulario);
+
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto7: form.get('pm_monto7'),
+                mpaZi_correo: form.get('mpaZi_correo'),
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('pm_monto7'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+
+                fetch('http://localhost:3000/pagoZinli', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+
+                console.log(parseFloat(form.get('pm_monto7')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto7'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+        }
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+    $('#formCHEQUE').submit(function(e){                                     
+        e.preventDefault();
+        var formulario = document.getElementById('formCHEQUE');
+        const form = new FormData(formulario);
+
+
+        var newPost = {
+                ped_numero_compra:ped_numero_compra, 
+                usu_username:usu_username, 
+                pm_monto8: form.get('pm_monto8'),
+                mpaCh_numero: form.get('mpaCh_numero'),
+                mpaCh_nro_cuenta: form.get('mpaCh_nro_cuenta'),
+                ban_id : formCHEQUE.ban_nombre4.value
+
+            }
+
+        if(estatus2!='Pagado'){
+            if( (parseFloat(form.get('pm_monto8'))) <= (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                fetch('http://localhost:3000/pagoCheque', {
+                    method : "POST",
+                    body: JSON.stringify(newPost),
+                    headers:{
+                        "Content-type": "application/json"
+                    },
+                    success: function(data) {                       
+                        tablaFormas.ajax.reload(null, false);                        
+                    }
+                }).then(res=>res.json())
+                .then(data=>{
+                    console.log(data)
+                    //location.reload();
+                })
+
+                console.log(parseFloat(form.get('pm_monto8')))
+                console.log(parseFloat(document.getElementById("totalPagar").value))
+
+                if( (parseFloat(form.get('pm_monto8'))) === (parseFloat(document.getElementById("totalPagar").value)) ){
+
+                    fetch('http://localhost:3000/otorgarpuntos', {
+                        method : "POST",
+                        body: JSON.stringify(newPost),
+                        headers:{
+                            "Content-type": "application/json"
+                        },
+                        success: function(data) {                       
+                            tablaFormas.ajax.reload(null, false);                        
+                        }
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch("http://localhost:3000/productoPedido/"+ped_numero_compra)
+                    .then((response)=>response.json())
+                    .then((detalles)=>{
+
+                        console.log("entre1")
+                            for(const itemDetalle of detalles){ 
+
+                                var newPost2 ={
+                                    "dp_id": itemDetalle.dp_id,
+                                    "pro_clave": itemDetalle.pro_clave,
+                                    "pro_nombre": itemDetalle.pro_nombre,
+                                    "dp_cantidad": itemDetalle.dp_cantidad
+                                }
+                                console.log("entre2")
+                                console.log(newPost2)
+
+                                fetch('http://localhost:3000/descontarinv/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+                                fetch('http://localhost:3000/descontarinv2/', {
+                                    method : "PUT",
+                                    body: JSON.stringify(newPost2),
+                                    headers:{
+                                        "Content-type": "application/json"
+                                    },
+                                    success: function(data) {                       
+                                        tablaFormas.ajax.reload(null, false);                        
+                                    }
+                                })
+
+
+
+                            }
+                    }) 
+            
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "PUT"
+                    })
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+                    fetch('http://localhost:3000/pedidopagado/'+ped_numero_compra, {
+                        method : "POST"
+                    }).then(res=>res.json())
+                    .then(data=>{
+                        console.log(data)
+                        //location.reload();
+                    })
+
+
+
+
+                }
+            }
+        }
+           		        
+        $('#modalPago').modal('hide');											     			
+    });
+
+
+    $('#formCompra').submit(function(e){                                     
+        e.preventDefault();
+
+        var formulario = document.getElementById('formCompra');
+        const form = new FormData(formulario);
+
+        var newPost = {
+            tie_clave: formCompra.tie_nombre.value, 
+            usu_id: formCompra.usu_username.value
+            }
+
+            console.log(newPost)
+
+            fetch('http://localhost:3000/newpedido', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                }
+            }).then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+                location.reload();
+            })
+
+            /*fetch('http://localhost:3000/newpedidoEstatus', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                }
+            }).then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+                //location.reload();
+            })*/
+
+        $('#modalCRUD').modal('hide');											     			
+    });
+
+    $(document).on("click", ".btnProducto", function(){		
+        
+        /*if ( $.fn.dataTable.isDataTable('#tablaProductos') ) {
+            $('#tablaProductos').DataTable().destroy();
+            $('#tablaProductos').empty();
+        }*/
+
+        opcion='editar';
+        fila = $(this).closest("tr");	
+        ped_numero_compra = $(this).closest('tr').find('td:eq(0)').text();
+        tie_nombre = $(this).closest('tr').find('td:eq(2)').text();
+        usu_username = $(this).closest('tr').find('td:eq(3)').text();
+        estatus = $(this).closest('tr').find('td:eq(4)').text();
+        ped_total = $(this).closest('tr').find('td:eq(6)').text();
+        console.log(ped_numero_compra)
+
+        let tablaProductos = $('#tablaProductos').DataTable({   
+            retrieve: true,
+            paging: false,         
+        "ajax":{
+            "url": "http://localhost:3000/productoPedido2/"+ped_numero_compra,
+            "dataSrc":""
+        },
+        "columns":[
+            {"data":"dp_id"},
+            {"data":"pro_clave"},
+            {"data":"dp_precio"},
+            {"data":"pro_nombre"},
+            {"data":"dp_cantidad"},
+            {"data":"preciot"},            
+            {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btn-sm btnmodificar'>Modificar</button><button class='btn btn-danger btn-sm btnBorrar'>Borrar</button></div></div>"}
+        ],
+        "columnDefs":[{
+            "targets":[2],
+        }] 
+    });
+
+
+    $("#btnAgregar").click(function(){
+        opcion='crear';            
+        id=null;
+        $("#formCompra").trigger("reset");
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text(" Agregar Compra");
+        $('#modalCRUD3').modal('show');	    
+    });
+
+
+        fetch("http://localhost:3000/productoTienda2/"+ped_numero_compra)
+            .then((response)=>response.json())
+            .then((productos)=>{
+                let listaProductos=document.querySelector("#pro_nombre");
+
+                    for(const itemProducto of productos){ 
+                        let option="<option value="+itemProducto.pro_clave+">"+itemProducto.pro_clave+" "+itemProducto.pro_nombre+"</option>";
+
+                        listaProductos.innerHTML+=option;
+                    }
+        })
+
+        /*$("#for_id").val(for_id);
+        $("#for_tipo").val(for_tipo);
+        $("#for_descripcion").val(for_descripcion);*/
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Cambiar Estatus");
+        $('#modalCRUD2').modal('show');
+        document.getElementById("numerodecompra").value = ""+ped_numero_compra+"";
+        document.getElementById("tienda").value = ""+tie_nombre+"";
+        document.getElementById("usuario").value = ""+usu_username+"";
+        document.getElementById("total").value = ""+ped_total+"";  
+
+
+        
+        $("#btnCrearPDF").click(function(){
+            console.log(estatus)
+            if(estatus==='Pagado'){
+                const $elementoParaConvertir = document.body;
+                    html2pdf()
+                    .set({
+                            margin:1,
+                            filename:'Compra_'+ped_numero_compra+'.pdf',
+                            html2canvas:{
+                                scale:3,
+                                letterRendering:true,
+                            },
+                            jsPDF: {
+                                unit:"in",
+                                format:"a2",
+                                orientation:'portrait',
+                            }
+                    })
+                    .from($elementoParaConvertir)
+                    .save()
+                    .catch(err => console.log(err))
+                    .finally()
+                    .then(() => {
+                        console.log("Guardado!")
+                    })
+            }
+
+        });
+ 	   
+    });
+
+
+    //Agregar
+
+
+    //EDITAR        
+    $(document).on("click", ".btnmodificar", function(){	
+        opcion='editar'; 	
+        $("#formProducto").trigger("reset");      
+        fila = $(this).closest("tr");	      
+        dp_id= parseInt($(this).closest('tr').find('td:eq(0)').text());        
+        pro_clave= parseInt($(this).closest('tr').find('td:eq(1)').text());  
+        dp_cantidad =parseInt($(this).closest('tr').find('td:eq(3)').text());
+
+        console.log(dp_id)
+
+        //$("#pro_clave").val(pro_clave);
+        $("#dp_cantidad").val(dp_cantidad);
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text(" Modificar Producto");
+        $('#modalCRUD3').modal('show');
+    });
+
+
+     //BORRAR
+    $(document).on("click", ".btnBorrar", function(){
+        var newPost = {
+                ped_numero_compra:ped_numero_compra
+            }
+        fila = $(this);           
+        dp_id= parseInt($(this).closest('tr').find('td:eq(0)').text());      
+        Swal.fire({
+            title: '¿Confirma eliminar el registro?',                
+            showCancelButton: true,
+            confirmButtonText: `Confirmar`,                
+            }).then((result) => {               
+            if (result.isConfirmed) {
+                
+                $.ajax({
+                    url: 'http://localhost:3000/productoPedido/'+dp_id+"/"+ped_numero_compra,
+                    method: 'DELETE',         
+                });
+                Swal.fire('¡Registro Eliminado!', '', 'success')
+            } 
+            })
+
+
+    });
+
+
+
+
+    $('#formProducto').submit(function(e){                                     
+        e.preventDefault();
+
+        var formulario = document.getElementById('formProducto');
+        const form = new FormData(formulario);
+        var newPost = {
+                ped_numero_compra:ped_numero_compra,
+                pro_clave: formProducto.pro_nombre.value,
+                dp_cantidad: form.get('dp_cantidad')
+            }
+        var newPut = {
+                dp_cantidad: form.get('dp_cantidad')
+            }
+
+        if(opcion=='crear'){
+            fetch('http://localhost:3000/productoPedido', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                },
+                success: function(data) {                       
+                    tablaDescuentos.ajax.reload(null, false);                        
+                }
+            })
+        }
+
+        if(opcion=='editar'){
+
+            $.ajax({                    
+                url: "http://localhost:3000/productoPedido/"+dp_id,
+                method: 'put',                                        
+                contentType: 'application/json',  
+                data:  JSON.stringify(newPut)
+            });	
+        }  
+
+        /*fetch('http://localhost:3000/actotal', {
+                method : "PUT",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                }
+            })*/
+        $('#modalCRUD3').modal('hide');			
+        							     			
+    });
+
+});
+</script>
+<button id="btnCrear" class="button is-danger is-pulled-right">Crear nuevo Compra</button>
+</body>
+</html>

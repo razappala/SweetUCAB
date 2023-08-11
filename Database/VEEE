@@ -1,0 +1,362 @@
+SELECT * FROM valor
+
+INSERT INTO public.revista(
+	rev_fecha_publi, rev_fecha_fin)
+	VALUES ('16-07-2002', '06-08-2022');
+    
+INSERT INTO public.revista(
+	rev_fecha_publi, rev_fecha_fin)
+	VALUES ('26-07-2002', '13-02-2023');
+    
+select * from revista
+
+INSERT INTO descuento(
+	des_fecha_inicio, des_fecha_fin, des_porcentaje, des_codigo, fk_producto, fk_revista)
+	VALUES ( '16/07/2022', '16/07/2022', 10, 'primerapromo', 2, 1);
+    
+select * from descuento
+
+
+select * from valor
+
+INSERT INTO valor(
+	val_precio, val_fecha_hora_inicio, val_fecha_hora_fin, fk_metpago_canje_punto)
+	VALUES (5, '2022-07-16',null, 1) returning *;
+
+select * from metodo_de_pago_canje_punto
+
+INSERT INTO metodo_de_pago_canje_punto(
+	fk_persona_natural, fk_persona_juridica, fk_persona_empleado)
+	VALUES (null, null, null);
+    
+    
+    
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('El Paraiso', 'Parroquia');
+    
+    
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Los Ruices', 'Parroquia');
+    
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Montalban', 'Parroquia');
+    
+INSERT INTO public.lugar(
+	lug_nombre, lug_tipo)
+	VALUES ('Capitolio', 'Parroquia');
+    
+Select * from lugar
+
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sweet Shop', true, 1);
+    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sweet Shop - CA', true, 1);
+    
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('Sweet Shop - Montalban', true, 3);
+    
+Select * from tienda
+
+INSERT INTO public.persona_persona_natural(
+	per_rif, pern_codigo_carnet, pern_cedula, pern_p_nombre, pern_s_nombre, pern_p_apellido, pern_s_apellido, pern_direccion, fk_lugar, fk_tienda)
+	VALUES ('J123456', null, 28318100, 'Karina', 'Valentina', 'Gonzalez', null, 'Calle El Parque', 1, 2);         
+    
+Select * from persona_persona_natural
+
+INSERT INTO persona_persona_juridica(
+	per_rif, perj_denom_comercial, perj_razon_social, perj_pagina_web, perj_capital, perj_direccion_fiscal, perj_direccion_principal,fk_lugar_fiscal, fk_lugar_principal, fk_tienda)
+	VALUES ('J549615874', 'Bodegita', 'Familia HERSHEY C.A', 'WWW.telotengo.com', 800, 'avenida principal', 'avenida paez', 2, 1,2) RETURNING *
+    
+select pj.per_rif, pj.perj_denom_comercial, pj.perj_razon_social, pj.perj_pagina_web, pj.perj_capital, pj.perj_direccion_fiscal, pj.perj_direccion_principal, lgf.lug_nombre AS lug_nombre_fiscal, lgp.lug_nombre AS lug_nombre_principal, t.tie_nombre
+    FROM persona_persona_juridica pj, lugar lgf, lugar lgp, tienda t
+    WHERE pj.fk_lugar_fiscal=lgf.lug_id AND pj.fk_lugar_principal=lgp.lug_id AND pj.fk_tienda =t.tie_clave
+
+
+select pj.per_id, pj.per_rif, pj.perj_denom_comercial, pj.perj_razon_social, pj.perj_pagina_web, pj.perj_capital, pj.perj_direccion_fiscal, pj.perj_direccion_principal, t.tie_nombre, (SELECT tel_numero FROM telefono WHERE fk_persona_juridica=pj.per_id LIMIT 1)
+    FROM persona_persona_juridica pj, lugar lgf, lugar lgp, tienda t
+    WHERE pj.fk_lugar_fiscal=lgf.lug_id AND pj.fk_lugar_principal=lgp.lug_id AND pj.fk_tienda =t.tie_clave
+
+Select * from persona_persona_juridica
+
+DELETE FROM public.tienda
+	WHERE tie_clave=3;
+
+
+INSERT INTO persona_persona_juridica( per_rif, perj_denom_comercial, perj_razon_social, perj_pagina_web, perj_capital, perj_direccion_fiscal, perj_direccion_principal,fk_lugar_fiscal, fk_lugar_principal, fk_tienda) 
+    VALUES ('J56247908', 'Supermercado', 'Lgghhhggg', 'www.kkkkka.com', 67, 'avenida pricipal', 'av universidad',2, 4, 4) RETURNING *
+    
+INSERT INTO telefono(
+	tel_numero, fk_persona_natural, fk_persona_juridica, fk_persona_empleado, fk_persona_contacto)
+	VALUES ('04123091248',null,(select per_id FROM persona_persona_juridica WHERE per_rif='J549615874') ,null, null);
+
+select * from telefono
+
+
+select pj.per_id,pj.per_rif, pj.perj_denom_comercial, pj.perj_razon_social, pj.perj_pagina_web, pj.perj_capital, pj.perj_direccion_fiscal, pj.perj_direccion_principal, lgf.lug_nombre AS lug_nombre_fiscal, lgp.lug_nombre AS lug_nombre_principal, t.tie_nombre, (SELECT tel_numero FROM telefono WHERE fk_persona_juridica=pj.per_id LIMIT 1), (select pco_id from persona_contacto WHERE fk_persona_juridica=pj.per_id LIMIT 1), (select pco_nombre from persona_contacto WHERE fk_persona_juridica=pj.per_id LIMIT 1), (select pco_apellido from persona_contacto WHERE fk_persona_juridica=pj.per_id LIMIT 1) 
+FROM persona_persona_juridica pj, lugar lgf, lugar lgp, tienda t 
+WHERE pj.fk_lugar_fiscal=lgf.lug_id AND pj.fk_lugar_principal=lgp.lug_id AND pj.fk_tienda =t.tie_clave
+
+INSERT INTO persona_contacto(
+	pco_nombre, pco_apellido, fk_persona_juridica)
+	VALUES ('Belen', 'Lopez',(SELECT per_id FROM persona_persona_juridica WHERE per_rif='J549615874' )) RETURNING *;
+
+select * from persona_contacto
+
+UPDATE persona_contacto
+	SET pco_nombre=?, pco_apellido=?
+	WHERE pco_id=? ;
+    
+select * from tienda    
+UPDATE persona_persona_juridica set per_rif='J123654851', perj_denom_comercial='Hoteleriaaaa' , perj_razon_social='Portofino' , perj_pagina_web='www.portofinosuits.com', perj_capital=1000, perj_direccion_fiscal='Av principal', perj_direccion_principal='	Av Teheran', fk_lugar_fiscal=1, fk_lugar_principal=2, fk_tienda=5 
+where per_id=4
+
+INSERT INTO departamento(
+	dep_nombre)
+	VALUES ('Dep. Ventas');
+
+INSERT INTO persona_empleado(
+	per_rif, emp_cedula, emp_salario, fk_lugar, fk_tienda, fk_departamento)
+	VALUES ('J6754789', '9087654', 78, 3, 5, 1) RETURNING *;
+    
+INSERT INTO persona_empleado(per_rif, emp_cedula, emp_salario, fk_lugar, fk_tienda, fk_departamento) 
+VALUES ('"+per_rif+"', '"+emp_cedula+"'," +emp_salario+","+lug_id+","+tie_clave+") RETURNING *;    
+    
+    
+SELECT pe.per_id, pe.per_rif, pe.emp_cedula, pe.emp_salario, lug_nombre, tie_nombre, dep_nombre, (SELECT tel_numero FROM telefono WHERE fk_persona_empleado=pe.per_id LIMIT 1)
+    FROM persona_empleado pe, lugar l, tienda, departamento
+    WHERE  pe.fk_tienda=tie_clave AND pe.fk_departamento=dep_id AND pe.fk_lugar=lug_id
+    
+INSERT INTO telefono(
+	tel_numero, fk_persona_empleado)
+	VALUES ('0412456789',(select per_id FROM persona_empleado WHERE emp_cedula='9851236')) RETURNING *;
+
+select * from persona_empleado
+
+INSERT INTO public.metodo_de_pago_canje_punto(
+	fk_persona_natural, fk_persona_juridica, fk_persona_empleado)
+	VALUES (null, null,4) RETURNING
+    
+SELECT * FROM valor;
+
+Insert into valor (val_precio, val_fecha_hora_inicio, val_fecha_hora_fin, fk_metpago_canje_punto)
+Values (13,'18-07-2022','29-07-2022',2) RETURNING *
+
+
+INSERT INTO rol(
+	rol_nombre, rol_descripcion)
+        VALUES ('Administrador de Pasillo','Vigilar por ahi');
+        
+INSERT INTO rol(
+	rol_nombre, rol_descripcion)
+        VALUES ('Cajero','Facturar');
+        
+INSERT INTO rol(
+	rol_nombre, rol_descripcion)
+        VALUES ('Gerente','encargado de tienda');
+        
+        
+        
+select * from rol
+
+INSERT INTO usuario(
+	usu_username, usu_contrasena, fk_rol, fk_persona_empleado)
+	VALUES ('eladmin', '123456',1 , 4);
+    
+    
+select * from usuario
+
+SELECT u.usu_id, u.usu_username, u.usu_contrasena, r.rol_nombre, p.emp_cedula 
+FROM persona_empleado p, rol r, usuario u 
+where p.per_id = u.fk_persona_empleado and r.rol_clave = u.fk_rol
+
+
+UPDATE rol set rol_nombre="+rol_nombre+", rol_descripcion="+rol_descripcion+" where rol_clave ="+id, 
+
+SELECT r.rol_clave, r.rol_nombre, f.fun_id, f.fun_tipo, f.fun_descripcion
+FROM rol r, funcion f, rol_funcion rf
+WHERE r.rol_clave=rf.rol_clave AND f.fun_id=rf.fun_id
+ORDER BY r.rol_clave
+
+SELECT r.rol_clave, r.rol_nombre, f.fun_id, f.fun_tipo, f.fun_descripcion
+FROM rol r, funcion f, rol_funcion rf
+WHERE r.rol_clave=rf.rol_clave AND f.fun_id=rf.fun_id
+ORDER BY r.rol_clave
+
+SELECT rf.rf_id,r.rol_nombre, f.fun_tipo, f.fun_descripcion
+FROM rol r, funcion f, rol_funcion rf
+WHERE r.rol_clave=rf.rol_clave AND f.fun_id=rf.fun_id
+
+INSERT INTO funcion(
+	fun_tipo, fun_descripcion)
+	VALUES ('Crear', 'Tienda'), ('Consultar', 'Tienda'), ('Borrar', 'Tienda'), ('Editar', 'Tienda');
+    
+INSERT INTO funcion(
+	fun_tipo, fun_descripcion)
+	VALUES ('Crear', 'ClienteNatural'), ('Consultar', 'ClienteNatural'), ('Borrar', 'ClienteNatural'), ('Editar', 'ClienteNatural');
+INSERT INTO funcion(
+	fun_tipo, fun_descripcion)
+	VALUES ('Crear', 'ClienteJuridico'), ('Consultar', 'ClienteJuridico'), ('Borrar', 'ClienteJuridico'), ('Editar', 'ClienteJuridico');
+    
+    
+INSERT INTO funcion(
+	fun_tipo, fun_descripcion)
+	VALUES ('Crear', 'PersonaEmpleado'), ('Consultar', 'PersonaEmpleado'), ('Borrar', 'PersonaEmpleado'), ('Editar', 'PersonaEmpleado');
+
+INSERT INTO public.tienda(
+	tie_nombre, tie_tipo, fk_lugar)
+	VALUES ('SS Peñon',true, 3) returning *;
+    
+INSERT INTO public.detalle_pedido(
+    ped_numero_compra, pt_id, dp_cantidad, dp_precio, dp_peso_total)
+	VALUES (1, 1, 5, 300, null);
+    
+INSERT INTO public.pedido(
+	ped_numero_compra, ped_fecha, ped_total, ped_iva, fk_tienda, fk_usuario)
+	VALUES (2,'2022/09/19',135,15,6,5);
+    
+    
+INSERT INTO detalle_pedido(
+    ped_numero_compra, pt_id, dp_cantidad, dp_precio, dp_peso_total)
+	VALUES ('2', 1, 5, 300, null);
+    
+INSERT INTO public.estatus(
+	est_tipo)
+	VALUES ('Presupuesto'),('Listo para Entrega'),('Entregado');
+    
+INSERT INTO public.estatus(
+	est_clave,est_tipo)
+	VALUES (4,'Pagado');
+    
+    SELECT * FROM ESTATUS
+    
+    DELETE FROM ESTATUS WHERE EST_CLAVE=4
+    
+SELECT pr.pro_clave, pr.pro_nombre
+FROM pedido p, detalle_pedido d, producto_tienda t, producto pr
+WHERE   p.ped_numero_compra=d.ped_numero_compra
+        AND t.pt_id=d.pt_id
+        AND t.pro_clave=pr.pro_clave
+        
+        
+select * from producto
+select * from producto_tienda
+select * from detalle_pedido
+select * from pedido
+
+
+delete from producto where pro_clave=2
+
+delete from detalle_pedido dp 
+where dp.pt_id in (select pt_id from producto_tienda p where p.pro_clave=2)
+
+delete from producto_tienda where pro_clave=2
+
+delete from pedido_estatus where ped_numero_compra='2'
+
+delete from pedido where ped_numero_compra='2'
+
+select * from pedido
+
+select * from tienda
+select * from usuario
+INSERT INTO public.pedido(
+	ped_numero_compra, ped_fecha, ped_total, ped_iva, fk_tienda, fk_usuario)
+	VALUES ('1', '20/07/2022',0, 0, 2, 5);
+    
+    
+INSERT INTO public.producto_tienda(
+	pro_clave, tie_clave, pt_cantidad)
+	VALUES (14, 6, 3);
+
+INSERT INTO public.producto_tienda(
+	pro_clave, tie_clave, pt_cantidad)
+	VALUES (14, 6, 3);
+
+INSERT INTO public.producto_tienda(
+	pro_clave, tie_clave, pt_cantidad)
+	VALUES (15, 6, 18) returning *;
+    
+SELECT p.pro_clave, p.pro_nombre, pt.pt_cantidad
+FROM producto p, producto_tienda pt
+WHERE p.pro_clave=pt.pro_clave 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+select * from producto_tienda
+INSERT INTO public.detalle_pedido(
+	ped_numero_compra, pt_id, dp_cantidad, dp_precio, dp_peso_total)
+	VALUES ('1', 2, 3, 5, 15);
+select * from estatus
+INSERT INTO public.pedido_estatus(
+	ped_numero_compra, est_clave, pe_fecha_hora_inicio)
+	VALUES ('1', 1, '20/07/2022') returning *
+    
+SELECT pr.pro_clave, pr.pro_nombre, d.dp_cantidad 
+FROM pedido p, detalle_pedido d, producto_tienda t, producto pr 
+WHERE p.ped_numero_compra=d.ped_numero_compra AND t.pt_id=d.pt_id AND t.pro_clave=pr.pro_clave
+
+
+
+
+
+
+SELECT p.ped_numero_compra, p.ped_fecha, e.est_tipo, pe.pe_fecha_hora_inicio, pe.pe_fecha_hora_fin 
+FROM pedido p, estatus e, pedido_estatus pe 
+WHERE pe.ped_numero_compra=p.ped_numero_compra AND pe.est_clave=e.est_clave AND pe_fecha_hora_fin is null
+
+UPDATE public.pedido_estatus
+	SET pe_fecha_hora_fin=current_timestamp
+	WHERE est_clave in (select est_clave from estatus where est_tipo='Presupuesto') AND (ped_numero_compra='1') ;
+
+select * from pedido_estatus
+delete from pedido_estatus where pe_id=16
+
+INSERT INTO public.pedido_estatus(
+	ped_numero_compra, est_clave, pe_fecha_hora_inicio)
+	VALUES ( '1', 1, current_timestamp);
+    
+    
+select * from estatus
+
+
+INSERT INTO public.detalle_pedido(
+	ped_numero_compra, pt_id, dp_cantidad, dp_precio, dp_peso_total)
+	VALUES ('1',(select pt_id 
+                 FROM producto_tienda pt 
+                 WHERE pt.tie_clave in (select fk_tienda 
+                                        FROM pedido where ped_numero_compra='1')
+                       AND pt.pro_clave=15), 
+            7, (select pro_precio_actual FROM producto where pro_clave=15), 
+            (select (pro_peso_neto*5) FROM producto where pro_clave=15) ) returning *;
+
+select  pt_id 
+FROM    producto_tienda pt 
+WHERE   pt.tie_clave = (select tie_clave 
+                        FROM tienda
+                        WHERE tie_clave in (SELECT fk_tienda 
+                                            FROM pedido
+                                            WHERE ped_numero_Compra='1'))
+        AND pt.pro_clave=15
+    
+SELECT pt_id 
+FROM producto_tienda    
+WHERE pro_clave=15 AND tie_clave in (SELECT fk_tienda 
+                                     FROM pedido
+                                     WHERE ped_numero_Compra='1')
+    
+ select * from producto_tienda   
+    
+select * from producto

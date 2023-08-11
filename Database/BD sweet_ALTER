@@ -1,0 +1,734 @@
+alter table Producto
+    add column FK_tipo INTEGER not null,
+    add column FK_forma INTEGER not null;
+    
+--Relaciones que salen de la tabla Producto:
+
+alter table producto
+    add constraint FK_producto_tipo
+    Foreign key (FK_tipo)
+    references tipo(tip_id);
+
+alter table producto
+    add constraint FK_producto_forma
+    Foreign key (FK_forma)
+    references forma(for_id);
+    
+--Relaciones tabla Sabor_Producto:
+
+alter table Sabor_Producto
+    add constraint FK_sabpro_sabor
+    Foreign key(sab_id)
+    references sabor(sab_id);
+    
+alter table Sabor_Producto
+    add constraint FK_sabpro_producto
+    Foreign key(pro_clave)
+    references producto(pro_clave);
+    
+--Relaciones tabla Color_Producto:
+
+alter table Color_Producto
+    add constraint FK_colpro_color
+    Foreign key(col_id)
+    references color(col_id);
+    
+alter table Color_Producto
+    add constraint FK_colpro_producto
+    Foreign key(pro_clave)
+    references producto(pro_clave);
+    
+---------------------------------------
+alter table Imagen
+    add column FK_producto INTEGER not null;
+    
+--Relaciones de la tabla Imagen:
+
+alter table Imagen
+    add constraint FK_img_producto
+    Foreign key (FK_producto)
+    references producto(pro_clave);
+    
+----------------------------------------
+alter table Descuento
+    add column FK_producto INTEGER not null,
+    add column FK_revista INTEGER not null;
+    
+--Relaciones de la tabla Descuento:
+
+alter table Descuento
+    add constraint FK_descuento_producto
+    Foreign key (FK_producto)
+    references producto(pro_clave);
+    
+alter table Descuento
+    add constraint FK_descuento_revista
+    Foreign key (FK_revista)
+    references revista(rev_id);
+    
+--Relaciones de la tabla Producto_Tienda:
+
+alter table Producto_Tienda
+    add constraint FK_protie_producto
+    foreign key (pro_clave)
+    references Producto(pro_clave);
+
+alter table producto_tienda
+    add constraint FK_protie_tienda
+    foreign key (tie_clave)
+    references tienda(tie_clave);
+
+--Relaciones de la tabla Detalle_Pedido:
+
+alter table Detalle_Pedido
+    add constraint FK_detPed_Pedido
+    Foreign key (ped_numero_compra)
+    References Pedido(ped_numero_compra);
+    
+alter table Detalle_Pedido
+    add constraint FK_detPed_ProductoTienda
+    Foreign key (pt_id)
+    References Producto_Tienda(pt_id);
+
+--Relaciones de la tabla Detalle_Orden:
+
+alter table detalle_orden
+    add constraint FK_detor_reposicion_inventario
+    foreign key (rin_id)
+    references reposicion_inventario(rin_id);
+
+alter table detalle_orden
+    add constraint FK_detor_ProductoTienda
+    foreign key (pt_id)
+    references Producto_Tienda(pt_id);
+
+----------------------------------------
+alter table Metodo_de_pago_Tarjeta_debito
+    add column FK_banco INTEGER not null;
+
+alter table Metodo_de_pago_Tarjeta_credito
+    add column FK_banco INTEGER not null;
+
+alter table Metodo_de_pago_Pago_Movil
+    add column FK_banco INTEGER not null;
+    
+alter table Metodo_de_pago_Cheque
+    add column FK_banco INTEGER not null;
+    
+--Relaciones Metodos de Pago con Banco:
+
+alter table metodo_de_pago_Tarjeta_debito
+    add constraint FK_banco_tarjdeb
+    Foreign key (FK_banco)
+    References banco (ban_id);
+    
+alter table metodo_de_pago_Tarjeta_credito
+    add constraint FK_banco_tarjcred
+    Foreign key (FK_banco)
+    References banco (ban_id);
+    
+alter table metodo_de_pago_Pago_Movil
+    add constraint FK_banco_pagomov
+    Foreign key (FK_banco)
+    References banco (ban_id);
+    
+alter table metodo_de_pago_Cheque
+    add constraint FK_banco_cheque
+    Foreign key (FK_banco)
+    References banco (ban_id);
+    
+--------------------------------------
+alter table valor 
+    add column FK_metpago_canje_punto INTEGER not null;
+    
+--Relaciones de la tabla Valor:
+
+alter table Valor
+    add constraint FK_valor_mp_canje_punto
+    Foreign key (FK_metpago_canje_punto)
+    References Metodo_de_Pago_Canje_punto(mpa_id);
+    
+-------------------------------------
+alter table Punto
+    add column FK_pedido varchar(15) not null;
+alter table Punto
+    add column FK_usuario INTEGER not null;
+    
+--Relaciones de la tabla Punto:
+
+alter table punto
+    add constraint FK_punto_pedido
+    Foreign key (FK_pedido)
+    References Pedido(ped_numero_compra);
+    
+alter table punto
+    add constraint FK_punto_usuario
+    Foreign key (FK_usuario)
+    References Usuario(usu_id);
+    
+-------------------------------------
+alter table Pedido
+    add column FK_tienda INTEGER not null,
+    add column FK_usuario INTEGER not null;
+    
+--Relaciones de la tabla Pedido:
+
+alter table Pedido
+    add constraint FK_pedido_tienda
+    Foreign key (FK_tienda)
+    References Tienda(tie_clave);
+    
+alter table Pedido
+    add constraint FK_pedido_usuario
+    Foreign key (FK_usuario)
+    References Usuario(usu_id);
+    
+--Relaciones de la tabla Tienda_Departamento:
+
+alter table Tienda_departamento
+    add constraint FK_tiedep_tienda
+    foreign key (tie_clave)
+    references tienda(tie_clave);
+
+alter table Tienda_departamento
+    add constraint FK_tiedep_departamento
+    foreign key (dep_id)
+    references departamento(dep_id);
+    
+--------------------------------------
+alter table Tienda
+    add column FK_lugar INTEGER not null;
+    
+--Relaciones de la tabla Tienda:
+
+alter table Tienda
+    add constraint FK_tienda_lugar
+    foreign key (FK_lugar)
+    references lugar(lug_id);
+
+--Relaciones de la tabla Lugar:
+
+alter table lugar
+    add constraint FK_lugar_lugar
+    Foreign key (FK_lugar)
+    References Lugar (lug_id);
+
+-------------------------------------
+alter table Usuario
+    add column FK_rol INTEGER not null,
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER,
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Usuario:
+
+alter table Usuario
+    add constraint FK_usuario_rol
+    Foreign key (FK_rol)
+    References Rol(rol_clave);
+    
+alter table Usuario
+    add constraint FK_usuario_persona_natural
+    foreign key (FK_persona_natural)
+    references persona_persona_natural(per_id);
+
+alter table Usuario
+    add constraint FK_usuario_persona_juridica
+    foreign key (FK_persona_juridica)
+    references persona_persona_juridica(per_id);
+
+alter table Usuario
+    add constraint FK_usuario_empleado
+    foreign key (FK_persona_empleado)
+    references persona_empleado(per_id);
+
+--Relaciones de la tabla Rol_Funcion:
+
+alter table Rol_Funcion
+    add constraint FK_rolfun_rol
+    foreign key (rol_clave)
+    references Rol(rol_clave);
+    
+alter table Rol_Funcion
+    add constraint FK_rolfun_funcion
+    foreign key (fun_id)
+    references Funcion(fun_id);
+
+alter table rol
+    alter column rol_descripcion set data type varchar(50);
+    
+alter table rol
+    alter column rol_nombre set data type varchar(50);
+------------------------------------
+alter table Persona_persona_natural
+    add column FK_lugar INTEGER not null,
+    add column FK_tienda INTEGER not null;
+    
+alter table Persona_persona_juridica
+    add column FK_lugar_principal INTEGER not null,
+    add column FK_lugar_fiscal INTEGER not null,
+    add column FK_tienda INTEGER not null;
+    
+alter table Persona_empleado
+    add column FK_lugar INTEGER not null,
+    add column FK_tienda INTEGER not null,
+    add column FK_departamento INTEGER not null;
+    
+--Relaciones de la tabla Persona:
+
+alter table Persona_persona_natural
+    add constraint FK_persona_natural_lugar
+    foreign key (FK_lugar)
+    references Lugar(lug_id);
+    
+alter table Persona_persona_natural
+    add constraint FK_persona_natural_tienda
+    foreign key (FK_tienda)
+    references Tienda(tie_clave);
+--    
+alter table Persona_persona_juridica
+    add constraint FK_persona_juridica_lugarprincp
+    foreign key (FK_lugar_principal)
+    references Lugar(lug_id);
+    
+alter table Persona_persona_juridica
+    add constraint FK_persona_juridica_lugarfiscal
+    foreign key (FK_lugar_fiscal)
+    references Lugar(lug_id);
+    
+alter table Persona_persona_juridica
+    add constraint FK_persona_juridica_tienda
+    foreign key (FK_tienda)
+    references Tienda(tie_clave);
+--    
+alter table Persona_empleado
+    add constraint FK_persona_empleado_lugar
+    foreign key (FK_lugar)
+    references Lugar(lug_id);
+    
+alter table Persona_empleado
+    add constraint FK_persona_empleado_tienda
+    foreign key (FK_tienda)
+    references Tienda(tie_clave);
+    
+alter table Persona_empleado
+    add constraint FK_persona_empleado_departamento
+    foreign key (FK_departamento)
+    references Departamento(dep_id);
+    
+----------------------------------------
+alter table Telefono
+    add column FK_persona_natural INTEGER not null,
+    add column FK_persona_juridica INTEGER not null,
+    add column FK_persona_empleado INTEGER not null,
+    add column FK_persona_contacto INTEGER not null;
+    
+--Relaciones de la tabla Telefono:
+
+alter table Telefono
+    add constraint FK_telefono_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Telefono
+    add constraint FK_telefono_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Telefono
+    add constraint FK_telefono_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+alter table Telefono
+    add constraint FK_telefono_persona_contacto
+    foreign key (FK_persona_contacto)
+    references Persona_contacto(pco_id);
+    
+----------------------------------------
+alter table Persona_contacto
+    add column FK_persona_juridica INTEGER not null;
+    
+--Relaciones de la tabla Persona_Contacto:
+
+alter table Persona_contacto
+    add constraint FK_persona_contacto_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+-----------------------------------------
+alter table Control_asistencia
+    add column FK_persona_empleado INTEGER not null;
+
+--Relaciones de la tabla Control_asistencia:
+
+alter table Control_asistencia
+    add constraint FK_control_asistencia_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+--Relaciones de la tabla Empleado_Horario:
+
+alter table Empleado_horario
+    add constraint FK_emphor_persona_empleado
+    foreign key (per_id)
+    references Persona_empleado(per_id);
+    
+alter table Empleado_horario
+    add constraint FK_emphor_horario
+    foreign key (hor_id)
+    references Horario(hor_id);
+    
+--Relaciones de la tabla Inventario:
+
+alter table Inventario
+    add constraint FK_inventario_producto_tienda
+    foreign key (pt_id)
+    references Producto_tienda(pt_id);
+    
+alter table Inventario
+    add constraint FK_inventario_almacen
+    foreign key (alm_id)
+    references Almacen(alm_id);
+    
+--Relaciones de la tabla Almacén:
+
+alter table Almacen
+    add constraint FK_almacen_almacen
+    Foreign key (FK_almacen)
+    References Almacen(alm_id);
+
+--Relaciones de la tabla Orden_ReposicionI
+
+alter table orden_reposicionI
+    add constraint FK_ordRepI_almacen_pide
+    foreign key (alm_id_pide)
+    references almacen(alm_id);
+    
+alter table orden_reposicionI
+    add constraint FK_ordRepI_almacen_recibe
+    foreign key (alm_id_recibe)
+    references almacen(alm_id);
+    
+--Relaciones de la tabla Beneficio_Empleado
+
+alter table beneficio_empleado
+    add constraint FK_benem_empleado
+    foreign key (per_id)
+    references persona_empleado(per_id);
+
+alter table beneficio_empleado
+    add constraint FK_benem_beneficio
+    foreign key (ben_id)
+    references beneficio(ben_id);
+
+-----------------------------------------
+alter table Detalle_Interno
+    add column FK_producto_tienda INTEGER not null;
+    
+--Relaciones de la tabla Detalle Interno:
+
+alter table detalle_interno
+    add constraint FK_det_int_ordrep
+    foreign key (ore_id)
+    references orden_reposicionI(ore_id);
+    
+alter table detalle_interno
+    add constraint FK_detalleint_productotienda
+    foreign key (FK_producto_tienda)
+    references Producto_Tienda(pt_id);
+    
+--Relaciones de la tabla Ord_Rep_Estatus:
+
+alter table Ord_Rep_Estatus
+    add constraint FK_ordrep_estatus_orden_reposicionI
+    foreign key (ore_id)
+    references Orden_ReposicionI(ore_id);
+    
+alter table Ord_Rep_Estatus
+    add constraint FK_ordrep_estatus_estatus
+    foreign key (est_clave)
+    references Estatus(est_clave);
+    
+--Relaciones de la tabla Pedido_Estatus:
+
+alter table pedido_estatus
+    add constraint FK_pedest_pedido
+    foreign key (ped_numero_compra)
+    references pedido(ped_numero_compra);
+
+alter table pedido_estatus
+    add constraint FK_pedest_estatus
+    foreign key (est_clave)
+    references estatus(est_clave);
+    
+--Relaciones de la tabla Rep_inv_Estatus:
+
+alter table Rep_inv_Estatus
+    add constraint FK_repinv_estatus_reposicion_inventario
+    foreign key (rin_id)
+    references Reposicion_Inventario(rin_id);
+    
+alter table Rep_inv_Estatus
+    add constraint FK_repinv_estatus_estatus
+    foreign key (est_clave)
+    references Estatus(est_clave);
+    
+--Relaciones de la tabla Pedido_Met-Pago:
+
+alter table pedido_met_pago
+    add constraint FK_pedMp_ped_numero_compra
+    foreign key (ped_numero_compra)
+    references pedido(ped_numero_compra);
+    
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_efectivo
+    foreign key (mpa_id_efectivo)
+    references metodo_de_pago_efectivo(mpa_id);
+
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_tdd
+    foreign key (mpa_id_tar_deb)
+    references metodo_de_pago_tarjeta_debito(mpa_id);
+
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_tdc
+    foreign key (mpa_id_tar_cred)
+    references metodo_de_pago_tarjeta_credito(mpa_id);
+
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_pago_movil
+    foreign key (mpa_id_pago_movil)
+    references metodo_de_pago_pago_movil(mpa_id);
+
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_zelle
+    foreign key (mpa_id_zelle)
+    references metodo_de_pago_zelle(mpa_id);
+
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_paypal
+    foreign key (mpa_id_paypal)
+    references metodo_de_pago_paypal(mpa_id);
+    
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_zinli
+    foreign key (mpa_id_zinli)
+    references metodo_de_pago_zinli(mpa_id);
+    
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_cheque
+    foreign key (mpa_id_cheque)
+    references metodo_de_pago_cheque(mpa_id);
+
+alter table pedido_met_pago
+    add constraint FK_pedMp_mpa_id_canje_punto
+    foreign key (mpa_id_canje_punto)
+    references metodo_de_pago_canje_punto(mpa_id);
+
+---------------------------------------------
+alter table Metodo_de_pago_Efectivo
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Efectivo
+
+alter table Metodo_de_pago_Efectivo
+    add constraint FK_MPEfectivo_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_pago_Efectivo
+    add constraint FK_MPEfectivo_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_pago_Efectivo
+    add constraint FK_MPEfectivo_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_pago_Tarjeta_debito
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Tarjeta_debito
+
+alter table Metodo_de_pago_Tarjeta_debito
+    add constraint FK_MPTarjDeb_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_pago_Tarjeta_debito
+    add constraint FK_MPTarjDeb_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_pago_Tarjeta_debito
+    add constraint FK_MPTarjDeb_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_pago_Tarjeta_credito
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Tarjeta_credito
+
+alter table Metodo_de_pago_Tarjeta_credito
+    add constraint FK_MPTarjCre_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_pago_Tarjeta_credito
+    add constraint FK_MPTarjCre_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_pago_Tarjeta_credito
+    add constraint FK_MPTarjCre_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_Pago_Pago_movil
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Pago_Movil
+
+alter table Metodo_de_Pago_Pago_movil
+    add constraint FK_MPPagomov_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_Pago_Pago_movil
+    add constraint FK_MPPagomov_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_Pago_Pago_movil
+    add constraint FK_MPPagomov_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_Pago_Zelle
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Zelle
+
+alter table Metodo_de_Pago_Zelle
+    add constraint FK_MPZelle_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_Pago_Zelle
+    add constraint FK_MPZelle_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_Pago_Zelle
+    add constraint FK_MPZelle_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_Pago_Paypal
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Paypal
+
+alter table Metodo_de_Pago_Paypal
+    add constraint FK_MPPaypal_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_Pago_Paypal
+    add constraint FK_MPPaypal_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_Pago_Paypal
+    add constraint FK_MPPaypal_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_Pago_Zinli
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Zinli
+
+alter table Metodo_de_Pago_Zinli
+    add constraint FK_MPZinli_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_Pago_Zinli
+    add constraint FK_MPZinli_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_Pago_Zinli
+    add constraint FK_MPZinli_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_Pago_Cheque
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Cheque
+
+alter table Metodo_de_Pago_Cheque
+    add constraint FK_MPCheque_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_Pago_Cheque
+    add constraint FK_MPCheque_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_Pago_Cheque
+    add constraint FK_MPCheque_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);
+    
+---------------------------------------------
+alter table Metodo_de_Pago_Canje_punto
+    add column FK_persona_natural INTEGER,
+    add column FK_persona_juridica INTEGER, 
+    add column FK_persona_empleado INTEGER;
+    
+--Relaciones de la tabla Metodo_de_Pago_Canje_punto
+
+alter table Metodo_de_Pago_Canje_punto
+    add constraint FK_MPPunto_persona_natural
+    foreign key (FK_persona_natural)
+    references Persona_persona_natural(per_id);
+    
+alter table Metodo_de_Pago_Canje_punto
+    add constraint FK_MPPunto_persona_juridica
+    foreign key (FK_persona_juridica)
+    references Persona_persona_juridica(per_id);
+    
+alter table Metodo_de_Pago_Canje_punto
+    add constraint FK_MPPunto_persona_empleado
+    foreign key (FK_persona_empleado)
+    references Persona_empleado(per_id);

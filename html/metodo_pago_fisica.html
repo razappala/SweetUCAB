@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodos de Pago</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script>
+        function SelectChanged(){
+            if(document.aform.metodopago.value=="CASH"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='';
+                document.getElementById('TDD').style.display='none';
+                document.getElementById('TDC').style.display='none';
+                document.getElementById('PM').style.display='none';
+                document.getElementById('ZELLE').style.display='none';
+                document.getElementById('PAYPAL').style.display='none';
+                document.getElementById('ZINLI').style.display='none';
+                document.getElementById('CHEQUE').style.display='none';
+            }
+            if(document.aform.metodopago.value=="TDD"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='none';
+                document.getElementById('TDD').style.display='';
+                document.getElementById('TDC').style.display='none';
+                document.getElementById('PM').style.display='none';
+                document.getElementById('ZELLE').style.display='none';
+                document.getElementById('PAYPAL').style.display='none';
+                document.getElementById('ZINLI').style.display='none';
+                document.getElementById('CHEQUE').style.display='none';
+            }
+            if(document.aform.metodopago.value=="TDC"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='none';
+                document.getElementById('TDD').style.display='none';
+                document.getElementById('TDC').style.display='';
+                document.getElementById('PM').style.display='none';
+                document.getElementById('ZELLE').style.display='none';
+                document.getElementById('PAYPAL').style.display='none';
+                document.getElementById('ZINLI').style.display='none';
+                document.getElementById('CHEQUE').style.display='none';
+            }
+            if(document.aform.metodopago.value=="PM"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='none';
+                document.getElementById('TDD').style.display='none';
+                document.getElementById('TDC').style.display='none';
+                document.getElementById('PM').style.display='';
+                document.getElementById('ZELLE').style.display='none';
+                document.getElementById('PAYPAL').style.display='none';
+                document.getElementById('ZINLI').style.display='none';
+                document.getElementById('CHEQUE').style.display='none';
+            }
+            if(document.aform.metodopago.value=="ZELLE"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='none';
+                document.getElementById('TDD').style.display='none';
+                document.getElementById('TDC').style.display='none';
+                document.getElementById('PM').style.display='none';
+                document.getElementById('ZELLE').style.display='';
+                document.getElementById('PAYPAL').style.display='none';
+                document.getElementById('ZINLI').style.display='none';
+                document.getElementById('CHEQUE').style.display='none';
+            }
+            if(document.aform.metodopago.value=="PAYPAL"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='none';
+                document.getElementById('TDD').style.display='none';
+                document.getElementById('TDC').style.display='none';
+                document.getElementById('PM').style.display='none';
+                document.getElementById('ZELLE').style.display='none';
+                document.getElementById('PAYPAL').style.display='';
+                document.getElementById('ZINLI').style.display='none';
+                document.getElementById('CHEQUE').style.display='none';
+            }
+            if(document.aform.metodopago.value=="ZINLI"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='none';
+                document.getElementById('TDD').style.display='none';
+                document.getElementById('TDC').style.display='none';
+                document.getElementById('PM').style.display='none';
+                document.getElementById('ZELLE').style.display='none';
+                document.getElementById('PAYPAL').style.display='none';
+                document.getElementById('ZINLI').style.display='';
+                document.getElementById('CHEQUE').style.display='none';
+            }
+            if(document.aform.metodopago.value=="CHEQUE"){
+                //document.getElementById('PUNTOS').style.display='';
+                document.getElementById('CASH').style.display='none';
+                document.getElementById('TDD').style.display='none';
+                document.getElementById('TDC').style.display='none';
+                document.getElementById('PM').style.display='none';
+                document.getElementById('ZELLE').style.display='none';
+                document.getElementById('PAYPAL').style.display='none';
+                document.getElementById('ZINLI').style.display='none';
+                document.getElementById('CHEQUE').style.display='';
+            }
+        }  
+    </script>
+
+</head>
+<body>
+    <div class="section">
+        <div class="columns is-centered">
+            <div class="column is-7">
+                <h2 class="title is-2 is-italic">Pago:</h2>
+                <div class="field">
+                    <label class="label">Metodo de Pago</label>
+                    <div class="control">
+                      <div class="select">
+                        <form name="aform">
+                            <select name="metodopago" id="metodopago" onchange="SelectChanged()">
+                                <option disabled selected >Seleccione</option>
+                                <option value="CASH" >EFECTIVO</option>
+                                <option value="TDD" >Tarjeta de Debito</option>
+                                <option value="TDC">Tarjeta de Credito</option>
+                                <option value="PM">Pago Movil</option>
+                                <option value="ZELLE">Zelle</option>
+                                <option value="PAYPAL">PayPal</option>
+                                <option value="ZINLI">Zinli</option>
+                                <option value="CHEQUE">Cheque</option>
+                              </select>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                <div name="CASH" id="CASH" style="display:none">
+                    <div class="details-content" >
+                        <div class="columns is-centered">
+                            <div class="column is-7">
+                                <div class="content is-medium has-text-centered">
+                                    <form id="formCASH">
+                                        <div class="field-label is-normal">
+                                            <label class="label">Puntos disponibles</label>
+                                        </div>
+                                        <div class="field">
+                                            <input type="text" class="input" name="pun_total_acumulado" id="pun_total_acumulado" placeholder="Puntos del usuario" disabled>
+                                        </div>
+                                        <div class="field">
+                                            <input type="number" class="input" name="punto_canje" id="punto_canje" placeholder="Cantidad a usar">
+                                        </div>
+                                        <div class="field">
+                                            <input class="input" type="number" placeholder="Denominacion">    
+                                        </div>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div id="TDD" name="TDD" style = " display: none">
+                    <div class="details-content">
+                                <div class="column is-medium has-text-centered is-grouped">
+                                    <form id="formTDD">
+                                        <div class="field is-horizontal">
+                                            <div class="field-label is-normal">
+                                                <label class="label">Tipo de Cuenta</label>
+                                            </div>
+                                        
+                                            <div class="field-body">
+                                                <div class="field">
+                                                    <div class="control">
+                                                        <div class="select">
+                                                            <select name="mpaTd_tipo_cuenta" id="mpaTd_tipo_cuenta" onchange="SelectChanged()">
+                                                                <option disabled selected>Tipo de Cuenta</option>
+                                                                <option value="Ahorro" >Ahorro</option>
+                                                                <option value="Corriente" >Corriente</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <input  name="mpaTd_nro_tarjeta" id="mpaTd_nro_tarjeta" type="number" class="input" placeholder="Numero de cuenta">
+                                        </div>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                    </div>
+                </div>
+            
+                <div name="TDC" id="TDC" style = " display: none">
+                    <div class="details-content">
+                        <div class="columns is-centered">
+                            <div class="column is-7">
+                                <div class="content is-medium has-text-centered">
+                                    <form id="formTDC">
+                                        <div class="field">
+                                            <input name="mpaTc_nro_tarjeta" id="mpaTc_nro_tarjeta" type="number" class="input" placeholder="Numero de Tarjeta">
+                                        </div>
+                                        <div class="field">
+                                            <input  name="mpaTc_fecha_vencimiento" id="mpaTc_fecha_vencimiento" type="date" class="input" placeholder="Fecha de Vencimiento">
+                                        </div>
+                                        <div class="field">
+                                            <input   name="mpaTc_cvv" id="mpaTc_cvv" type="number" class="input" placeholder="Codigo de Seguridad">
+                                        </div>
+                                        <div class="field-body">
+                                            <div class="field">
+                                                <div class="control">
+                                                    <div class="select">
+                                                        <select name="mpaTc_tipo" id="mpaTc_tipo" onchange="SelectChanged()">
+                                                            <option disabled selected>Tipo de Tarjeta</option>
+                                                            <option value="Visa" >Visa</option>
+                                                            <option value="Mastercard" >Mastercard</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+            
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="PM" name="PM" style="display: none">
+                    <div class="details-content" >
+                        <div class="columns is-centered">
+                            <div class="column is-7">
+                                <div class="content is-medium has-text-centered">
+                                    <form id="formPM">
+                                        <div class="field">
+                                            <input  id="mpaPm_numero_telf" name="mpaPm_numero_telf" class="input" type="number" placeholder="Numero de telefono">    
+                                        </div>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="ZELLE" name="ZELLE" style="display: none">
+                    <div class="details-content" >
+                        <div class="columns is-centered">
+                            <div class="column is-7">
+                                <div class="content is-medium has-text-centered">
+                                    <form id="ZELLE">
+                                        <div class="field">
+                                            <input name="mpaZ_correo" id="mpaZ_correo" type="input" class="input"  placeholder="Correo electronico" required>    
+                                        </div>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div name="PAYPAL" id="PAYPAL" style="display: none">
+                    <div class="details-content" >
+                        <div class="columns is-centered">
+                            <div class="column is-7">
+                                <div class="content is-medium has-text-centered">
+                                    <form id="formPAYPAL">
+                                        <div class="field">
+                                            <input name="mpaPp_correo" id="mpaPp_correo" type="input" class="input"  placeholder="Correo electronico" required>    
+                                        </div>
+                                        <div class="field">
+                                            <input name="mpaPp_nro_cuenta" id="mpaPp_nro_cuenta" type="input" class="input"  placeholder="Numero de Cuenta" required>    
+                                        </div>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div name="ZINLI" id="ZINLI" style="display: none">
+                    <div class="details-content" >
+                        <div class="columns is-centered">
+                            <div class="column is-7">
+                                <div class="content is-medium has-text-centered">
+                                    <form id="ZINLI">
+                                        <div class="field">
+                                            <input name="mpaZi_correo" id="mpaZi_correo" type="input" class="input"  placeholder="Correo electronico" required>    
+                                        </div>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div NAME="CHEQUE" id="CHEQUE" style="display: none">
+                    <div class="details-content" >
+                        <div class="columns is-centered">
+                            <div class="column is-7">
+                                <div class="content is-medium has-text-centered">
+                                    <form id="formCHEQUE">
+                                        <div class="field">
+                                            <input name="mpaCh_numero" type="input" class="input"  placeholder="Numero del Cheque" required>    
+                                        </div>
+                                        <div class="field">
+                                            <input name="mpaCh_nro_cuenta" id="mpaCh_nro_cuenta" type="number" class="input" placeholder="Numero de cuenta">
+                                        </div>
+                                        <div class="field">
+                                            <input name="pm_monto" type="number" class="input"  placeholder="MONTO" required>    
+                                        </div>
+                                        <div class="field has-text-centered">
+                                            <button type="submit" id="btnProcesar" class="button is-danger is-pulled-right">Procesar Pago</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap5.min.js"></script>        
+<script>
+$(document).ready(function() {   
+
+
+    let opcion = null;
+    let ped_numero_compra, ped_fecha, est_tipo, pe_fecha_hora_inicio, pe_fecha_hora_fin, dp_id
+    //MOSTRAR
+
+    $("#btnCrear").click(function(){
+        opcion='crear';            
+        id=null;
+        $("#formCompra").trigger("reset");
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Crear Compra");
+        $('#modalCRUD').modal('show');	    
+
+        fetch("http://localhost:3000/tienda")
+            .then((response)=>response.json())
+            .then((tiendas)=>{
+                let listatiendas=document.querySelector("#tie_nombre");
+
+                    for(const itemTienda of tiendas){ 
+                        let option="<option value="+itemTienda.tie_clave+">"+itemTienda.tie_nombre+"</option>";
+
+                        listatiendas.innerHTML+=option;
+                    }
+        }) 
+
+
+        fetch("http://localhost:3000/usuariosss")
+            .then((response)=>response.json())
+            .then((tiendas)=>{
+                let listausuarios=document.querySelector("#usu_username");
+
+                    for(const itemUsuario of tiendas){ 
+                        let option="<option value="+itemUsuario.usu_id+">"+itemUsuario.usu_username+"</option>";
+
+                        listausuarios.innerHTML+=option;
+                    }
+        }) 
+
+    });
+
+
+
+    //Cambiar estatus      
+    $(document).on("click", ".btnPagar", function(){	
+        
+        fila = $(this).closest("tr");	
+        ped_numero_compra = $(this).closest('tr').find('td:eq(0)').text();
+
+        window.open('http://127.0.0.1:5500/html/metodo_pago_fisica.html', "_self");
+
+        //abrir html de pagos
+        
+
+        /*fila = $(this).closest("tr");	        
+        ped_numero_compra = $(this).closest('tr').find('td:eq(0)').text();
+        est_tipo = fila.find('td:eq(2)').text();
+
+
+        $("#for_id").val(for_id);
+        $("#for_tipo").val(for_tipo);
+        $("#for_descripcion").val(for_descripcion);
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Cambiar Estatus");
+        if (est_tipo!='Entregado'){
+            $('#modalCRUD').modal('show');	 
+        }*/
+    });
+
+
+    $('#formCompra').submit(function(e){                                     
+        e.preventDefault();
+
+        var formulario = document.getElementById('formCompra');
+        const form = new FormData(formulario);
+
+        var newPost = {
+            tie_clave: formCompra.tie_nombre.value, 
+            usu_id: formCompra.usu_username.value
+            }
+
+            console.log(newPost)
+
+            fetch('http://localhost:3000/newpedido', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                }
+            }).then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+                //location.reload();
+            })
+
+            fetch('http://localhost:3000/newpedidoEstatus', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                }
+            }).then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+                //location.reload();
+            })
+
+        $('#modalCRUD').modal('hide');											     			
+    });
+
+    $(document).on("click", ".btnProducto", function(){		            
+        opcion='editar';
+        fila = $(this).closest("tr");	
+        ped_numero_compra = $(this).closest('tr').find('td:eq(0)').text();
+        console.log(ped_numero_compra)
+
+        let tablaProductos = $('#tablaProductos').DataTable({   
+            retrieve: true,
+            paging: false,         
+        "ajax":{
+            "url": "http://localhost:3000/productoPedido/"+ped_numero_compra,
+            "dataSrc":""
+        },
+        "columns":[
+            {"data":"dp_id"},
+            {"data":"pro_clave"},
+            {"data":"pro_nombre"},
+            {"data":"dp_cantidad"},
+            {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btn-sm btnmodificar'>Modificar</button><button class='btn btn-danger btn-sm btnBorrar'>Borrar</button></div></div>"}
+        ],
+        "columnDefs":[{
+            "targets":[2],
+        }] 
+    });
+
+
+    $("#btnAgregar").click(function(){
+        opcion='crear';            
+        id=null;
+        $("#formCompra").trigger("reset");
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text(" Agregar Compra");
+        $('#modalCRUD3').modal('show');	    
+    });
+
+
+        fetch("http://localhost:3000/productoTienda2/"+ped_numero_compra)
+            .then((response)=>response.json())
+            .then((productos)=>{
+                let listaProductos=document.querySelector("#pro_nombre");
+
+                    for(const itemProducto of productos){ 
+                        let option="<option value="+itemProducto.pro_clave+">"+itemProducto.pro_nombre+"</option>";
+
+                        listaProductos.innerHTML+=option;
+                    }
+        })
+
+        /*$("#for_id").val(for_id);
+        $("#for_tipo").val(for_tipo);
+        $("#for_descripcion").val(for_descripcion);*/
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text("Cambiar Estatus");
+        $('#modalCRUD2').modal('show');	       
+    });
+
+
+    //Agregar
+
+
+    //EDITAR        
+    $(document).on("click", ".btnmodificar", function(){	
+        opcion='editar'; 	
+        $("#formProducto").trigger("reset");      
+        fila = $(this).closest("tr");	      
+        dp_id= parseInt($(this).closest('tr').find('td:eq(0)').text());        
+        pro_clave= parseInt($(this).closest('tr').find('td:eq(1)').text());  
+        dp_cantidad =parseInt($(this).closest('tr').find('td:eq(3)').text());
+
+        console.log(dp_id)
+
+        //$("#pro_clave").val(pro_clave);
+        $("#dp_cantidad").val(dp_cantidad);
+        $(".modal-header").css( "background-color", "#23272b");
+        $(".modal-header").css( "color", "white" );
+        $(".modal-title").text(" Modificar Producto");
+        $('#modalCRUD3').modal('show');
+    });
+
+
+     //BORRAR
+    $(document).on("click", ".btnBorrar", function(){
+        fila = $(this);           
+        dp_id= parseInt($(this).closest('tr').find('td:eq(0)').text());      
+        Swal.fire({
+            title: '¿Confirma eliminar el registro?',                
+            showCancelButton: true,
+            confirmButtonText: `Confirmar`,                
+            }).then((result) => {               
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'http://localhost:3000/productoPedido/'+dp_id,
+                    method: 'DELETE',         
+                });
+                Swal.fire('¡Registro Eliminado!', '', 'success')
+            } 
+            })
+    });
+
+
+    $('#formProducto').submit(function(e){                                     
+        e.preventDefault();
+
+        var formulario = document.getElementById('formProducto');
+        const form = new FormData(formulario);
+        var newPost = {
+                ped_numero_compra:ped_numero_compra,
+                pro_clave: formProducto.pro_nombre.value,
+                dp_cantidad: form.get('dp_cantidad')
+            }
+        var newPut = {
+                dp_cantidad: form.get('dp_cantidad')
+            }
+
+        if(opcion=='crear'){
+            fetch('http://localhost:3000/productoPedido', {
+                method : "POST",
+                body: JSON.stringify(newPost),
+                headers:{
+                    "Content-type": "application/json"
+                },
+                success: function(data) {                       
+                    tablaDescuentos.ajax.reload(null, false);                        
+                }
+            })
+        }
+
+        if(opcion=='editar'){
+
+            $.ajax({                    
+                url: "http://localhost:3000/productoPedido/"+dp_id,
+                method: 'put',                                        
+                contentType: 'application/json',  
+                data:  JSON.stringify(newPut),                       
+                success: function(data) {                       
+                    tablaProductos.ajax.reload(null, false);                        
+                }
+            });	
+        }  
+   	
+        $('#modalCRUD3').modal('hide');											     			
+    });
+
+});
+</script>
+
+</html>

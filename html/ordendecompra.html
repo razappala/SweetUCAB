@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>Orden de Compra</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.min.css"> 
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="html2pdf.bundle.min.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+
+    <nav class="navbar has-shadow is-white">
+        <!--logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <img src="imagenes/logo.png" alt="logo pag" style="max-height: 60px" class="py-2 px-2">
+            </a>
+        </div>
+
+        <div class="navbar-menu has-background-danger" id="nav-links">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">Inicio</a>
+                <a class="navbar-item" href="novedades.html">Novedades</a>
+                <a class="navbar-item" href="productos.html">Productos</a>
+                <a class="navbar-item" href="sweetFlyer.html">Descuentos</a>
+                <a class="navbar-item" href="contacto.html">Contáctanos</a>
+            </div>
+            <div class="navbar-end has-background-danger">
+                <a href="carrito.html" class="navbar-item">
+                    <img src="imagenes/carrito.png" alt="carrito">
+                </a>
+                <a href="login.html" class="navbar-item">
+                    Iniciar Sesion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="section">
+        <div class="columns is-centered">
+            <div class="column is-5 has-text-centered">
+                <h2 class="subtitle is-3 has-text-weight-bold">Orden de Compra</h2>
+            </div>          
+        </div>
+        <div class="column is-half">
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Cliente</label>
+                  </div>
+                <div class="field-body">
+                    <div class="field">
+                        <input type="text" class="input" name="puntos_user"
+                                    placeholder="Autor de la compra" disabled>
+                    </div>
+                </div>
+           </div>
+           <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Telefono</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <input type="text" class="input" name="puntos_user"
+                                    placeholder="Telefono del cliente" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Direccion</label>
+                  </div>
+                <div class="field-body">
+                    <div class="field">
+                        <input type="text" class="input" name="puntos_user"
+                                    placeholder="Direccion del cliente" disabled>
+                    </div>
+                </div>
+           </div>
+       
+        </div>
+        <div class="columns is-centered">
+            <div class="column is-5 has-text-centered">
+                <h2 class="subtitle is-4 has-text-weight-light has-text-danger">Listado de Productos</h2>
+            </div> 
+        </div>
+            <table class="table" id="table-factura">
+                <thead>
+                        <th class="has-text-centered">ID</th>
+                        <th class="has-text-centered">Nombre</th>
+                        <th class="has-text-centered">Cantidad</th>
+                </thead>
+        <tbody>
+            <!--Aqui se insertan los datos de la BD-->
+    
+        </tbody>
+        </table>
+            <script>
+                 fetch("http://localhost:3000/productoPedido/")
+                .then((response)=>response.json())
+                .then((productos)=>{
+                let listaProductos=document.querySelector("#table-factura");
+
+                    for(const itemProducto of productos){ 
+                       
+                        let tr="<tr><td>"+itemProducto.pro_clave+"</td><td>"+itemProducto.pro_nombre+"</td><td>"+itemProducto.dp_cantidad+"</td></tr>"
+                        listaProductos.innerHTML+=tr;
+                    }
+            })
+            </script>  
+            
+            <div class="columns is-pulled-right">
+                <div class="column is-5 has-text-centered is-grouped is-right" >
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">TOTAL</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="text" class="input" name="puntos_user"
+                                            placeholder="Total de la Compra" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+    </div>
+   
+    <div class="columns is-centered">
+        <div class="column is-5 has-text-centered">
+            <button id="btnCrearPDF" class="button is-danger has-text-centered">Generar PDF</button>
+        </div>          
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+                    // Escuchamos el click del botón
+                    const $boton=document.querySelector("#btnCrearPDF");
+                    $boton.addEventListener("click",() => {
+                        const $elementoParaConvertir = document.body;
+                        html2pdf()
+                            .set({
+                            margin:1,
+                            filename:'OrdendeCompra.pdf',
+                            html2canvas:{
+                                scale:3,
+                                letterRendering:true,
+                            },
+                            jsPDF: {
+                                unit:"in",
+                                format:"a3",
+                                orientation:'portrait',
+                            }
+                        })
+                        .from($elementoParaConvertir)
+                        .save()
+                        .catch(err => console.log(err))
+                        .finally()
+                        .then(() => {
+                            console.log("Guardado!")
+                        })
+    
+            });
+    });
+    
+    </script>
+
+</body>

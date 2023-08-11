@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+#footer {
+        position:absolute;
+        bottom:0;
+        width:100%;
+        height:60px;   /* Height of the footer */
+        background:rgb(216, 221, 227);
+     }
+    </style>
+    
+</head>
+
+<body>
+    <script src="../js/productos.js"></script>
+    <nav class="navbar has-shadow is-white">
+        <!--logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <img src="imagenes/logo.png" alt="logo pag" style="max-height: 60px" class="py-2 px-2">
+            </a>
+        </div>
+
+        <div class="navbar-menu has-background-danger" id="nav-links">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">Inicio</a>
+                <a class="navbar-item" href="novedades.html">Novedades</a>
+                <a class="navbar-item" href="productos.html">Productos</a>
+                <a class="navbar-item" href="sweetFlyer.html">Descuentos</a>
+                <a class="navbar-item" href="contacto.html">Contáctanos</a>
+            </div>
+            <div class="navbar-end has-background-danger">
+                <a href="carrito.html" class="navbar-item">
+                    <img src="imagenes/carrito.png" alt="carrito">
+                </a>
+                <a href="login.html" class="navbar-item">
+                    Iniciar Sesion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+<br><br><br><br>
+    <!--tabla productos -->
+    <div class="column">
+        <div class="columns is-7 is-centered">
+            <div class="table-contenedor has-text-centered">
+                <h2 class="subtitle is-3 has-text-centered is-italic has-text-weight-bold has-text-danger">Productos registrados</h2>
+                <br><br>
+                <table class="table" id="table-productos">
+                    <thead>
+            </div>
+                            <th class="has-text-centered">Nombre</th>
+                            <th class="has-text-centered">Historia</th>
+                            <th class="has-text-centered">Precio</th>
+                            <th class="has-text-centered">Peso neto</th>
+                            <th class="has-text-centered">Beneficio</th>
+                            <th class="has-text-centered">Sabor</th>
+                    </thead>
+            <tbody>
+                <!--Aqui se insertan los datos de la BD-->
+        
+            </tbody>
+            </table>
+        </div>
+    </div>
+    <br><br><br>
+
+    <div class="column is-grouped has-text-centered">
+        <a class="button is-danger" href="datosuser_compra.html"> Compra </a>
+         <!--Solo lo ve la cajera-->
+        <a class="button is-primary" href="datosuser_compraFisica.html">Facturar </a>
+    </div>
+   <br>
+   
+</body>
+<footer id="footer" class="has-text-centered">
+    <div class="column is-grouped">
+        <a href="sabor.html" class="button is-danger">Sabor</a>
+        <a href="color.html" class="button is-danger">Color</a>
+        <a href="tipo.html" class="button is-danger">Tipo</a>
+        <a href="forma.html" class="button is-danger">Forma</a>
+   </div>
+</footer>
+</html>
+
